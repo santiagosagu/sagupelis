@@ -1,0 +1,33 @@
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+  opacity: 3;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  font-family: 'Yanone Kaffeesatz', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 2.5rem;
+  background-color:  rgb(19, 18, 18);
+  opacity: 3;
+  color: #e2e0e0;
+  height: 100%;
+  max-width: 100vw;
+ 
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+    background-color:  rgba(29, 28, 28, 0.979);
+}
+
+body .inner_media_container {
+  width: 100%;
+  margin: 2rem;
+}
