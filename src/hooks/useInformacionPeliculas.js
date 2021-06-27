@@ -5,6 +5,62 @@ const useInformacionPeliculas = () => {
 
     const peliculas = [
         {
+            id: 123,
+            imagen: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/ghMQALCyytc6W0wlOlMIKiMSRKV.jpg',
+            nombre: "Expediente Warren: Obligado por el demonio (2021)",
+            descripcion: "Los investigadores paranormales Ed y Lorraine Warren se encuentran con lo que se convertiría en uno de los casos más sensacionales de sus archivos. La lucha por el alma de un niño los lleva más allá de todo lo que habían visto antes, para marcar la primera vez en la historia de los Estados Unidos que un sospechoso de asesinato reclamaría posesión demoníaca como defensa.",
+            categoria: 'Terror, Misterio, Suspenso',
+            url: 'https://www.fembed.com/v/42xylsz64lm06w0'
+        },
+        {
+            id: 122,
+            imagen: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/pr06RihHOGE3waZQx5fs2WYUdwr.jpg',
+            nombre: "Luca (2021)",
+            descripcion: "Ambientada en un precioso pueblo costero de la Riviera italiana, narra la historia sobre el paso a la edad adulta de un chico que vive un verano inolvidable lleno de helados, pasta e infinitos paseos en scooter. Luca comparte estas aventuras con su nuevo mejor amigo, pero toda la diversión se ve amenazada por un secreto muy profundo: él es un monstruo marino de un mundo que yace bajo la superficie del agua.",
+            categoria: 'Animacion, Comedia, Familia, Fantasia',
+            url: 'https://www.fembed.com/v/2rplqa207kx-g8n'
+        },
+        {
+            id: 121,
+            imagen: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/a0R1Ybj3m4M4ZeztizD7F6fmPCE.jpg',
+            nombre: "Chaos Walking (2021)",
+            descripcion: "Todd Hewitt es el último chico de Prentisstown, una pequeña comunidad cuya peculiaridad (aparte del hecho de que no hay mujeres) es que todos escuchan los pensamientos ajenos, lo que es definido como Ruido, un ruido que nunca cesa. Todd está contento porque sólo falta un mes para que sea su decimotercer cumpleaños y por fin, se convierta en hombre. Pero entonces, en uno de sus paseos por el bosque con su fiel perro, encuentra algo inesperado que cambiará su mundo para siempre: el silencio. O como lo define Todd: un agujero en el ruido.",
+            categoria: 'Ciencia ficcion, Accion, Aventura, Suspense',
+            url: 'https://streamtape.com/e/4oPo4M0mxWhK31k'
+        },
+        {
+            id: 120,
+            imagen: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/5LZUYPox2Ui59OzvnR06W2sqVXs.jpg',
+            nombre: "Samurái X: El fin (2021)",
+            descripcion: "Himura Kenshin (Sato Takeru) es un espadachín legendario. Después de la Restauración Meiji, dejó de matar con la espada. Intenta vivir una vida pacífica con Kamiya Kaoru, quien dirige una escuela de esgrima en la aldea. Las cosas cambian. El restaurante Akabeko, que es el lugar favorito para comer de Kenshin, está destruido. Kenshin encuentra una nota escrita “Junchu” allí. 1 2",
+            categoria: 'Accion, Drama',
+            url: 'https://streamtape.com/e/y7gxRJvZb8C1Lvp'
+        },
+        {
+            id: 119,
+            imagen: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/mptEtOkw906BJuD9rRUKG5sr5E9.jpg',
+            nombre: "Spirit - Indomable (2021)",
+            descripcion: "La vida de Lucky Prescott cambia para siempre cuando se muda de su casa en la gran ciudad a un pequeño pueblo fronterizo en el que entabla amistad con un caballo salvaje llamado Spirit.",
+            categoria: 'Animacion, Aventura, Familia, Western',
+            url: 'https://streamtape.com/e/3PoBL1Q1RDsdkw3'
+        },
+        {
+            id: 118,
+            imagen: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/vqfdiWzcMJjcFzm9YJO29TeH39M.jpg',
+            nombre: "Ser padre (2021)",
+            descripcion: "Un viudo convertido en papá lidia con las dudas, los miedos, el dolor y los pañales sucios mientras trata de criar a su hija solo. Inspirada en una historia real.",
+            categoria: 'Drama, Familia, Comedia',
+            url: 'https://streamtape.com/e/D90Yv73z4GIk2eV'
+        },
+        {
+            id: 117,
+            imagen: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/qb28nkLZV0v6yJZZRpJYl0LE35N.jpg',
+            nombre: "Cruella (2021)",
+            descripcion: "Ambientada en el Londres de los años 70, en plena revolución del punk rock, muestra a una joven estafadora llamada Estella, una chica inteligente y creativa, decidida a convertirse en una exitosa diseñadora de moda, que se asocia con un par de ladrones para sobrevivir en las calles de la capital británica. Pero cuando su talento para la moda llama la atención de la legendaria diseñadora, la Baronesa von Hellman, Estella cambia el rumbo de su vida hasta que una serie de acontecimientos y revelaciones que harán que Estella asuma su lado malvado y se convierta en la estridente, moderna y vengativa Cruella de Vil.",
+            categoria: 'Comedia, Crimen',
+            url: 'https://streamtape.com/e/2kOV4RGVKVuZba8'
+        },
+        {
             id: 116,
             imagen: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/3A2owG58gqx8fzRWhVOMAO6lbWq.jpg',
             nombre: "Sin remordimientos (2021)",
