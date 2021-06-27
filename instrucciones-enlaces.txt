@@ -1,0 +1,10 @@
+streamtape: https://streamtape.com
+    streamtape: 
+        nos llega la url de esta forma en la etiqueta video: //streamtape.com/get_video?id=P98XV7dWgZs0d6L&expires=1624830306&ip=FRuODxxEDxgN&token=FlLvoarUHKCx&stream=1 le agregamos el https y eliminamos la informacion que no nos importa solo le dejamos el id y a la url agregamos /e/ como se ve a continuacion: https://streamtape.com/e/P98XV7dWgZs0d6L
+        fuentes:
+            https://pelismart.com/
+
+    uqload: 
+        buscamos el iframe donde se encuentra el enlace de la siguiente manera https://uqload.com/embed-8aiqbcb2ndjk.html
+        fuentes:
+            https://pelisplushd.net/
