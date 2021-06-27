@@ -5,6 +5,30 @@ const useInformacionPeliculas = () => {
 
     const peliculas = [
         {
+            id: 105,
+            imagen: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/bnuC6hu7AB5dYW26A3o6NNLlIlE.jpg',
+            nombre: "Nadie (2021)",
+            descripcion: "Hutch Mansell, un padre de familia que aguanta con resignación y sin defenderse los golpes de la vida. Un don nadie. Una noche, cuando dos ladrones entran en su casa, Hutch decide no actuar y no trata de defenderse ni al él mismo ni a su familia, convencido de que solo así evitará una escalada de violencia. Tras el ataque, su hija adolescente Blake no oculta su decepción, y su esposa Becca se aleja todavía más.",
+            categoria: 'Accion, Crimen, Drama',
+            url: 'https://streamtape.com/e/Gvjq7MWPzOtlgk'
+        },
+        {
+            id: 104,
+            imagen: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/bnuC6hu7AB5dYW26A3o6NNLlIlE.jpg',
+            nombre: "Godzilla vs. Kong (2021)",
+            descripcion: "Godzilla y Kong, dos de las fuerzas más poderosas de un planeta habitado por todo tipo de aterradoras criaturas, se enfrentan en un espectacular combate que sacude los cimientos de la humanidad. Monarch (Kyle Chandler) se embarca en una misión de alto riesgo y pone rumbo hacia territorios inexplorados para descubrir los orígenes de estos dos titanes, en un último esfuerzo por tratar de salvar a dos bestias que parecen tener las horas contadas sobre la faz de la Tierra.",
+            categoria: 'Fantasia, Aventura, Accion',
+            url: 'https://streamtape.com/e/yrL36wrA3GT1rrq'
+        },
+        {
+            id: 103,
+            imagen: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/e9r4aLl7OAXdGK49u5oEjlbHKA3.jpg',
+            nombre: "Patrulla Trueno (2021)",
+            descripcion: "En un mundo en el que los supervillanos son algo común, dos amigas de la infancia distanciadas se reúnen después de que una de ellas idee un tratamiento que les da superpoderes para proteger su ciudad.",
+            categoria: 'Accion, Aventura, Comedia',
+            url: 'https://streamtape.com/e/2aWx0V0zgQiKVD'
+        },
+        {
             id: 102,
             imagen: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/rkuvJnamPl3xW9wKJsIS6qkmOCW.jpg',
             nombre: "La Liga de la Justicia de Zack Snyder (2021)",
