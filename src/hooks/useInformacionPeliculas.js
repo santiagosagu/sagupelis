@@ -5,6 +5,94 @@ const useInformacionPeliculas = () => {
 
     const peliculas = [
         {
+            id: 116,
+            imagen: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/3A2owG58gqx8fzRWhVOMAO6lbWq.jpg',
+            nombre: "Sin remordimientos (2021)",
+            descripcion: "Un ex Navy SEAL convertido en agente de la CIA busca venganza después de que su novia es asesinada por un narcotraficante de Baltimore.",
+            categoria: 'Accion, Suspense, Belica',
+            url: 'https://streamtape.com/e/L3LMDKp2kytvkd'
+        },
+        {
+            id: 115,
+            imagen: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/4h1Uc13QPjHTTUX0bikICWUxTSV.jpg',
+            nombre: "Ejército de los muertos (2021)",
+            descripcion: "Un grupo de mercenarios decide llevar a cabo el mayor atraco que jamás se haya realizado en la ciudad de Las Vegas justo después de que se produzca una epidemia de muertos vivientes. Para ello tendrán que adentrarse en una zona de cuarentena, con los riesgos que ello conlleva.",
+            categoria: 'Accion, Crimen, Ciencia ficcion, Terror, Suspense',
+            url: 'https://streamtape.com/e/Y7ROjepBJQTvxV9'
+        },
+        {
+            id: 114,
+            imagen: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/B3Xz48iyIh9ejffVtfCxwzTO7n.jpg',
+            nombre: "Agencia Secreta de Control Mágico (2021)",
+            descripcion: "La Agencia del Control de Magia envía a sus dos mejores agentes, Hansel y Gretel, a luchar contra la bruja de la Casa del Pan de Jengibre.",
+            categoria: 'Animacion, Comedia, Fantasia',
+            url: 'https://streamtape.com/e/e2z9DZdqJJSYBjm'
+        },
+        {
+            id: 113,
+            imagen: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/4ieLwzPsmYmmSfy34eIIOfWu6zo.jpg',
+            nombre: "Oxígeno (2021)",
+            descripcion: "Una mujer despierta en una unidad criogénica médica. No recuerda quién es ni cómo ha terminado encerrada en una caja no más grande que un ataúd. Mientras se queda sin oxígeno, debe reconstruir sus recuerdos para escapar de esa pesadilla.",
+            categoria: 'Ciencia ficcion, Suspenso, Drama',
+            url: 'https://streamtape.com/e/oGeMJaRrdJFJ2pD'
+        },
+        {
+            id: 112,
+            imagen: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/htNLpDWkaCYtkjjiFlfV2VBICUx.jpg',
+            nombre: "La mujer en la ventana (2021)",
+            descripcion: "La Dra. Anna Fox, que sufre de agorafobia, pasa sus días encerrada en su casa de Nueva York, bebiendo vino mientras ve viejas películas y espía a sus vecinos. Un día, mientras mira por la ventana, ve algo que sucede enfrente de su casa, en el hogar de los Russell, una familia a la que todo el barrio toma por ejemplar.",
+            categoria: 'Misterio, Crimen, Suspenso',
+            url: 'https://streamtape.com/e/pY2k8aG80lcrvLX'
+        },
+        {
+            id: 111,
+            imagen: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/tu6kz9Ejm7wljiO58waAuwn1miV.jpg',
+            nombre: "Aquellos que desean mi muerte (2021)",
+            descripcion: "Un adolescente testigo de un asesinato es perseguido por dos asesinos gemelos a través de las tierras salvajes de Montana. Aunque cuenta con un experto de la supervivencia para evitar que los secuaces le den caza, un incendio cercano pronto amenaza con robar la vida de todos los implicados.",
+            categoria: 'Suspense, Drama, Accion, Misterio',
+            url: 'https://streamtape.com/e/DZYOZgowAbCAgl'
+        },
+        {
+            id: 110,
+            imagen: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/2ytgYjDokdpkdRhbgdCVeWC7vJj.jpg',
+            nombre: "22 contra la Tierra (2021)",
+            descripcion: "22 desafía las reglas de El Gran Origen y se niega a ir a la Tierra. Para conseguirlo recluta a una pandilla de cinco almas nuevas en su intento de rebelión. Sin embargo, los resultados de las actividades de su séquito son totalmente inesperados y paradójicamente, la trama subversiva de 22 acabará en una revelación sorprendente sobre el significado de la vida.",
+            categoria: 'Familia, Animacion, Comedia',
+            url: 'https://streamtape.com/e/WgOLYpGeYxtb2j8'
+        },
+        {
+            id: 109,
+            imagen: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/w1eq7A9NArBbwZP9YYVJEZ2pvY.jpg',
+            nombre: "Los Mitchell contra las máquinas (2021)",
+            descripcion: "Katie Mitchell, una adolescente creativa y poco convencional, es aceptada en la escuela de cine de sus sueños, pero sus planes para volar a la universidad se ven truncados cuando su padre Rick, amante de la naturaleza, decide que toda la familia reunida acompañe a Katie en su viaje a la facultad y así hacer algo juntos una última vez. A Katie y a Rick se une el resto de la familia formada por la extremadamente optimista madre de Katie, Linda, su estrafalario hermano pequeño Aaron, y Monchi, el encantador y rechoncho carlino mascota de la familia, para este último viaje familiar.",
+            categoria: 'Animacion, Aventura, Comedia, Familia, Ciencia ficcion, Accion',
+            url: 'https://streamtape.com/e/49vZBrMRMKtKPd6'
+        },
+        {
+            id: 108,
+            imagen: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/ncnZa574KFkSRrwPpxbyRoIrteW.jpg',
+            nombre: "El protector (2021)",
+            descripcion: "Un ranchero en la frontera de Arizona se convierte en el improbable defensor de un joven mexicano que huye desesperadamente de los asesinos del cartel que lo han perseguido hasta Estados Unidos.",
+            categoria: 'Accion, Suspenso, Crime',
+            url: 'https://streamtape.com/e/qr7QGY4Zp0Tzd96'
+        },
+        {
+            id: 107,
+            imagen: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/5wEKcx7g3YRocecq18MwZd4dTyd.jpg',
+            nombre: "Polizón (2021)",
+            descripcion: "Durante una misión a Marte, un polizón provoca sin querer daños graves en los sistemas de soporte vital de la nave. Ante la escasez de recursos y un final potencialmente nefasto, la tripulación debe tomar una decisión imposible",
+            categoria: 'Ciencia ficcion, Drama, Suspenso',
+            url: 'https://streamtape.com/e/zGAO2QwdA2HYY9D'
+        },
+        {
+            id: 106,
+            imagen: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/t2GbiMJfO8txoihdJC8RsfK1ds7.jpg',
+            nombre: "Mortal Kombat (2021)",
+            descripcion: "Un boxeador fracasado descubre un secreto familiar que lo lleva a un torneo místico llamado Mortal Kombat donde se encuentra con un grupo de guerreros que luchan hasta la muerte para salvar los reinos del malvado hechicero Shang Tsung.",
+            categoria: 'Accion, Fantasia, Aventura',
+            url: 'https://streamtape.com/e/Oqr2dDVa1pHZlY4'
+        },
+        {
             id: 105,
             imagen: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/ddO5a3tMPpQutSDQO1bESgLWadB.jpg',
             nombre: "Nadie (2021)",
