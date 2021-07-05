@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import Styled from '@emotion/styled'
-import useInformacionPeliculas from '../hooks/useInformacionPeliculas'
-
-
+import React, { useState, useEffect } from "react";
+import Styled from "@emotion/styled";
+import useInformacionPeliculas from "../hooks/useInformacionPeliculas";
 
 const Titulo = Styled.h2`
     margin: 2rem;
@@ -10,7 +8,7 @@ const Titulo = Styled.h2`
     @media (min-width: 768px) {
         margin: 2rem 8rem;
     }
-`
+`;
 
 const Contenedor = Styled.div`
 
@@ -39,7 +37,7 @@ const Contenedor = Styled.div`
     
 
 
-`
+`;
 
 const Card = Styled.div`
     margin-right: 1.5rem;
@@ -51,7 +49,7 @@ const Card = Styled.div`
             cursor: pointer;
         }
     }
-`
+`;
 
 const CardImage = Styled.div`
     width: 15rem;
@@ -81,92 +79,73 @@ const CardImage = Styled.div`
         background-color:#fff;
         margin-bottom: 5rem;
     }
-`
+`;
 
 const Peliculas = ({ history }) => {
+  const [datosPelicula, guardarDatosPelicula] = useState({});
+  const [guardarDatosSerie] = useState({});
 
-    const [datosPelicula, guardarDatosPelicula] = useState({})
-    const [datosSerie, guardarDatosSerie] = useState({})
+  const [verPelicula, guardarVerPelicula] = useState(false);
+  const [verSerie, guardarVerSerie] = useState(false);
 
-    const [verPelicula, guardarVerPelicula] = useState(false)
-    const [verSerie, guardarVerSerie] = useState(false)
+  const { peliculas } = useInformacionPeliculas();
 
-    const { peliculas } = useInformacionPeliculas()
+  useEffect(() => {
+    const verificarDatos = () => {
+      if (!datosPelicula) {
+        guardarVerPelicula(false);
+      }
+    };
 
-    useEffect(() => {
-        const verificarDatos = () => {
+    verificarDatos();
+  }, [datosPelicula]);
 
-            if (!datosPelicula) {
+  const peliculaSeleccionada = (pelicula) => {
+    guardarDatosPelicula(pelicula);
+    guardarDatosSerie({});
 
-                guardarVerPelicula(false)
-            }
-        }
+    guardarVerPelicula(true);
+    guardarVerSerie(false);
 
-        verificarDatos()
+    history.push(`/ver-pelicula/${pelicula.nombre}/${pelicula.id}`);
+  };
 
-    }, [datosPelicula])
+  useEffect(() => {
+    const buscador = () => {
+      const busqueda = "accion";
 
+      peliculas.filter((pelicula) => {
+        return (
+          pelicula.nombre.toLowerCase().includes(busqueda) ||
+          pelicula.descripcion.toLowerCase().includes(busqueda) ||
+          pelicula.categoria.toLowerCase().includes(busqueda)
+        );
+      });
+    };
 
-    const peliculaSeleccionada = pelicula => {
+    buscador();
+  }, [peliculas]);
 
-        guardarDatosPelicula(pelicula)
-        guardarDatosSerie({})
-
-        guardarVerPelicula(true)
-        guardarVerSerie(false)
-
-
-        history.push(`/ver-pelicula/${pelicula.nombre}/${pelicula.id}`)
-
-    }
-
-    useEffect(() => {
-        const buscador = () => {
-            const busqueda = 'accion'
-
-            const filtro = peliculas.filter(pelicula => {
-                return (
-                    pelicula.nombre.toLowerCase().includes(busqueda) ||
-                    pelicula.descripcion.toLowerCase().includes(busqueda) ||
-                    pelicula.categoria.toLowerCase().includes(busqueda)
-                )
-            })
-
-        }
-
-        buscador()
-    }, [])
-
-    return (
+  return (
+    <>
+      {!verPelicula && !verSerie ? (
         <>
-            { !verPelicula && !verSerie
+          <Titulo>Todas las Peliculas</Titulo>
 
-                ?
-                <>
-                    <Titulo>Todas las Peliculas</Titulo>
-
-                    <Contenedor>
-                        {
-                            peliculas.map(pelicula =>
-                                <Card onClick={() => peliculaSeleccionada(pelicula)}>
-                                    <CardImage >
-                                        <img src={pelicula.imagen} alt={pelicula.nombre} />
-                                    </CardImage>
-                                    <h3>{pelicula.nombre}</h3>
-
-                                </Card>
-                            )
-                        }
-                    </Contenedor>
-                </>
-
-                : null
-
-            }
-
+          <Contenedor>
+            {peliculas.map((pelicula) => (
+              <Card onClick={() => peliculaSeleccionada(pelicula)}>
+                <CardImage>
+                  <img src={pelicula.imagen} alt={pelicula.nombre} />
+                </CardImage>
+                <h3>{pelicula.nombre}</h3>
+              </Card>
+            ))}
+          </Contenedor>
         </>
-
-    );
-}
+      ) : null}
+    </>
+  );
+};
 
 export default Peliculas;
