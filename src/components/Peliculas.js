@@ -83,7 +83,7 @@ const CardImage = Styled.div`
 
 const Peliculas = ({ history }) => {
   const [datosPelicula, guardarDatosPelicula] = useState({});
-  const [guardarDatosSerie] = useState({});
+  const [datosSerie, guardarDatosSerie] = useState({});
 
   const [verPelicula, guardarVerPelicula] = useState(false);
   const [verSerie, guardarVerSerie] = useState(false);
@@ -114,7 +114,7 @@ const Peliculas = ({ history }) => {
     const buscador = () => {
       const busqueda = "accion";
 
-      peliculas.filter((pelicula) => {
+      const filtro = peliculas.filter((pelicula) => {
         return (
           pelicula.nombre.toLowerCase().includes(busqueda) ||
           pelicula.descripcion.toLowerCase().includes(busqueda) ||
@@ -124,7 +124,7 @@ const Peliculas = ({ history }) => {
     };
 
     buscador();
-  }, [peliculas]);
+  }, []);
 
   return (
     <>
