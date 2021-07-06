@@ -269,7 +269,7 @@ const useInformacionPeliculas = () => {
       descripcion:
         "Enviada a casa tras una traumática misión de combate, una soldado francesa de élite usa sus habilidades letales para dar caza al hombre que agredió a su hermana.",
       categoria: "Suspenso, Accion, Drama",
-      url: "https://embed.mystream.to/iov6uhbnx6vc",
+      url: "https://pelisflix.li/?trembed=0&trid=9598&trtype=1",
     },
     {
       id: 98,
@@ -539,7 +539,7 @@ const useInformacionPeliculas = () => {
       descripcion:
         "Una antigua estrella del baloncesto caída en desgracia y sumido en el terrible mundo de las adicciones trata de volver al sendero correcto como entrenador de un equipo de instituto cuya mayor peculiaridad es estar compuesto por un variopinto grupo de estudiantes.",
       categoria: "Drama",
-      url: "https://embed.mystream.to/hw1olioiunlw",
+      url: "https://streamtape.com/e/wV3j22b2wxFJZjl",
     },
     {
       id: 71,
@@ -549,7 +549,7 @@ const useInformacionPeliculas = () => {
       descripcion:
         "Milo es un barman que vive una vida de fiestas y noches interminables. Cierto día, una serie de coincidencias lo llevan a conocer a Sunny, la mujer de sus sueños, y ambos acuerdan una cita. Pero la noche que tenía todo para ser romántica se convierte en un caos cuando el amigo de Milo, Renzo, aparece de la nada con todo el submundo de Berlín a sus espaldas.",
       categoria: "Comedia, Romance",
-      url: "https://embed.mystream.to/m1tf8vnpo7eq",
+      url: "https://www.fembed.com/v/r452jfegp38ydy2",
     },
     {
       id: 70,
@@ -559,7 +559,7 @@ const useInformacionPeliculas = () => {
       descripcion:
         "El joven Peter se ve obligado a abandonar su habitación cuando su abuelo Ed, recientemente enviudado, se muda a su casa. Con la ayuda de sus amigos, Peter declara la guerra a su abuelo para hacerle abandonar la habitación, pero Ed es un testarudo y no va a ponérselo nada fácil.",
       categoria: "Comedia, Familia, Drama",
-      url: "https://embed.mystream.to/b64r3vuvxleu",
+      url: "https://www.fembed.com/v/2rplqa20qe366n5",
     },
     {
       id: 69,
@@ -569,7 +569,7 @@ const useInformacionPeliculas = () => {
       descripcion:
         "Después de ser contratado para investigar una muerte sospechosa en la pequeña ciudad de Wander, un investigador privado mentalmente inestable se convence de que el caso está relacionado con el mismo 'encubrimiento de conspiración' que causó la muerte de su hija.",
       categoria: "Suspense, Crimen, Misterio",
-      url: "https://embed.mystream.to/u5inblvx94wg",
+      url: "https://www.fembed.com/v/y1pgjce3721-56k",
     },
     {
       id: 68,
@@ -599,7 +599,7 @@ const useInformacionPeliculas = () => {
       descripcion:
         "Conocemos a Sam, una princesa nacida en segundo lugar. No es la típica princesa y no encaja en ese mundo. Cuando su madre, la reina, la envía a clases de verano en un internado, Sam averigua que es una tapadera: ella y los demás alumnos descubren que tienen superpoderes y que están ahí para entrenar y entrar a formar parte del club secreto de los no herederos al trono. ¿Serán capaces de aprender a usar sus poderes para salvar sus reinos?",
       categoria: "Accion, Aventura, Comedia, Fantasia",
-      url: "https://embed.mystream.to/cjrusy80bwz2",
+      url: "https://www.fembed.com/v/2rplqa20qejjzn4",
     },
     {
       id: 65,

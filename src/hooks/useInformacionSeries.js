@@ -19,6 +19,247 @@ const useInformacionSeries = () => {
             ]
         }, */
     {
+      id: 36,
+      imagen:
+        "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/A4uh92nSommxHUkEKoeNH6I53dO.jpg",
+      nombre: "Home Before Dark - Las crónicas de Hilde Lisko (2020)",
+      descripcion:
+        "Una joven de Brooklyn comienza a investigar un caso sin resolver cuando visita a su padre, que vive en una pequeña población cuya comunidad ha cerrado el asunto.",
+      categoria: "Drama, Misterio",
+      temporadas: [
+        {
+          nombre: "temporada 1",
+          episodios: [
+            {
+              nombre: "episodio 1",
+              url: "https://streamtape.com/e/qK7R2jaYaQIamV",
+            },
+            {
+              nombre: "episodio 2",
+              url: "https://streamtape.com/e/1PwgxJxVYeHejQ2",
+            },
+            {
+              nombre: "episodio 3",
+              url: "https://streamtape.com/e/lgJ1VOq2k9U738j",
+            },
+            {
+              nombre: "episodio 4",
+              url: "https://streamtape.com/e/3BVpQjMklecdBb0",
+            },
+            {
+              nombre: "episodio 5",
+              url: "https://streamtape.com/e/xrQk3jvDRBukGPy",
+            },
+            {
+              nombre: "episodio 6",
+              url: "https://streamtape.com/e/YLdAQa1kMZiv87J",
+            },
+            {
+              nombre: "episodio 7",
+              url: "https://streamtape.com/e/4wk6O2A6J2fKg2L",
+            },
+            {
+              nombre: "episodio 8",
+              url: "https://streamtape.com/e/7GOg6lad9bcA1B8",
+            },
+            {
+              nombre: "episodio 9",
+              url: "https://streamtape.com/e/M0oRBY4PlmsmVkZ",
+            },
+            {
+              nombre: "episodio 10",
+              url: "https://streamtape.com/e/OxwrDOKb8AIZBYz",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: 35,
+      imagen:
+        "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/1Ok36olOn9HXOUlFdlOYngItmxX.jpg",
+      nombre: "Sombra y hueso (2021)",
+      descripcion:
+        "Basada en las novelas homónimas, Shadow and Bone, Sombra y Hueso en España, tiene lugar en un mundo fragmentado en dos por una tenebrosa barrera llamada La Sombra. En esta larga y temible barrera, las criaturas no naturales viven gracias a la carne humana, por lo que todo ser humano que entre en ella, acabará muerto. Sin embargo, una joven y cartógrafa llamada Alina decide adentrarse en La Sombra junto a su mejor amigo de la infancia, Mal, por órdenes del ejército. Dentro descubre que posee un gran poder que puede acabar con esta terrorífica barrera. Lo que no sabía era que tiene que separarse de su amigo Mal para poder entrenar junto a los Grisha, las personas de este mundo que poseen poderes. Alina conoce así al General Kirigan, el único Grisha que tiene el poder de crear sombras de la nada y con el que mantendrá una relación muy estrecha mientras intenta saber más de su nuevo poder y del mundo de los Grisha.",
+      categoria: "Sci-Fi & Fantasy",
+      temporadas: [
+        {
+          nombre: "temporada 1",
+          episodios: [
+            {
+              nombre: "episodio 1",
+              url: "https://streamtape.com/e/bpxQoygw2KtPVrx",
+            },
+            {
+              nombre: "episodio 2",
+              url: "https://streamtape.com/e/Y6zV9j9p7gSvPKv",
+            },
+            {
+              nombre: "episodio 3",
+              url: "https://streamtape.com/e/KkWb6MVm1Zub7K",
+            },
+            {
+              nombre: "episodio 4",
+              url: "https://streamtape.com/e/KyQj7qlyOAI0q10",
+            },
+            {
+              nombre: "episodio 5",
+              url: "https://streamtape.com/e/Bae9pQM3V2SyAX9",
+            },
+            {
+              nombre: "episodio 6",
+              url: "https://streamtape.com/e/jlYzkM8PdeSm6a",
+            },
+            {
+              nombre: "episodio 7",
+              url: "https://streamtape.com/e/GGZlAgpGRds18kg",
+            },
+            {
+              nombre: "episodio 8",
+              url: "https://streamtape.com/e/JXQeaOKmM7tjvxX",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: 34,
+      imagen:
+        "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/8yfkkAeoI77opqAvB9fyf4knftS.jpg",
+      nombre: "Servant (2019)",
+      descripcion:
+        "Una pareja de Philadelphia, de luto tras suceder una horrible tragedia, crea una grieta en su matrimonio que abre la puerta a una misteriosa fuerza que entra en su hogar.",
+      categoria: "Drama",
+      temporadas: [
+        {
+          nombre: "temporada 1",
+          episodios: [
+            {
+              nombre: "episodio 1",
+              url: "https://streamtape.com/e/GerwYobMYxt1p2A",
+            },
+            {
+              nombre: "episodio 2",
+              url: "https://streamtape.com/e/e4eRow0pyMSYPMa",
+            },
+            {
+              nombre: "episodio 3",
+              url: "https://streamtape.com/e/dRDXdekerkH921",
+            },
+            {
+              nombre: "episodio 4",
+              url: "https://streamtape.com/e/vzXegGMxW2s40XB",
+            },
+            {
+              nombre: "episodio 5",
+              url: "https://streamtape.com/e/VPK37MZ1BOFKGVD",
+            },
+            {
+              nombre: "episodio 6",
+              url: "https://streamtape.com/e/oAZywX8v8KTJ8jA",
+            },
+            {
+              nombre: "episodio 7",
+              url: "https://streamtape.com/e/4BByB8ZPxZUKlqD",
+            },
+            {
+              nombre: "episodio 8",
+              url: "https://streamtape.com/e/bGLA9AMeA7uP0yZ",
+            },
+            {
+              nombre: "episodio 9",
+              url: "https://streamtape.com/e/VXMGkebbx8hYOG",
+            },
+            {
+              nombre: "episodio 10",
+              url: "https://streamtape.com/e/JwA2M017Oafjdeo",
+            },
+          ],
+        },
+        {
+          nombre: "temporada 2",
+          episodios: [
+            {
+              nombre: "episodio 1",
+              url: "https://streamtape.com/e/gvKBKkq4zYfqQDW",
+            },
+            {
+              nombre: "episodio 2",
+              url: "https://streamtape.com/e/yM1bD9zOQpS11Rg",
+            },
+            {
+              nombre: "episodio 3",
+              url: "https://streamtape.com/e/8Ogz293GOafo7Vl",
+            },
+            {
+              nombre: "episodio 4",
+              url: "https://streamtape.com/e/LLZ7DrKwvksaOz",
+            },
+            {
+              nombre: "episodio 5",
+              url: "https://streamtape.com/e/YGM8o43dQQIvVM6",
+            },
+            {
+              nombre: "episodio 6",
+              url: "https://streamtape.com/e/RmjboRRQV3Skw4",
+            },
+            {
+              nombre: "episodio 7",
+              url: "https://streamtape.com/e/rJwoQkM8KkUbjRe",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: 33,
+      imagen:
+        "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/g3JsScc7mQCfc3e5e5rXwu7xVVP.jpg",
+      nombre: "See (2019)",
+      descripcion:
+        "Un virus ha acabado con la población de todo el mundo y los únicos supervivientes han quedado ciegos. La naturaleza ha recuperado los antiguos espacios urbanos, así que la civilización vive ahora en bosques, desarrollando su vida sin vista. Pero todo cambia cuando nacen dos bebés capaces de ver —hijos, además, de Baba Voss, lo que desata una guerra entre 'tribus' para impedir que estos niños puedan adquirir los conocimientos que permitan a los humanos reconstruir el mundo tal como era antes.",
+      categoria: "Drama, Sci-Fi & Fantasy, accion y aventura",
+      temporadas: [
+        {
+          nombre: "temporada 1",
+          episodios: [
+            {
+              nombre: "episodio 1",
+              url: "https://streamtape.com/e/6KGDqXVlKGu9jPx ",
+            },
+            {
+              nombre: "episodio 2",
+              url: "https://streamtape.com/e/1b8aBGlZQKceg4Z ",
+            },
+            {
+              nombre: "episodio 3",
+              url: "https://streamtape.com/e/wDqZ3VDgp7Slrj ",
+            },
+            {
+              nombre: "episodio 4",
+              url: "https://streamtape.com/e/xb7Rw2VjOGikY9x ",
+            },
+            {
+              nombre: "episodio 5",
+              url: "https://streamtape.com/e/w61gemQ00qSJ7rj ",
+            },
+            {
+              nombre: "episodio 6",
+              url: "https://streamtape.com/e/yrvWMLK1O0i1ZyJ ",
+            },
+            {
+              nombre: "episodio 7",
+              url: "https://streamtape.com/e/ydr384DagVu1Av8 ",
+            },
+            {
+              nombre: "episodio 8",
+              url: "https://streamtape.com/e/DqjQqgXzO1IwOj ",
+            },
+          ],
+        },
+      ],
+    },
+    {
       id: 32,
       imagen:
         "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/1LRLLWGvs5sZdTzuMqLEahb88Pc.jpg",
