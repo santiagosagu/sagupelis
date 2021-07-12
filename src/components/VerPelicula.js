@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import UseInformacionPeliculas from '../hooks/useInformacionPeliculas'
-import Styled from '@emotion/styled'
-import imagenUsuario from '../usuario.svg'
-import formatDistanceToNow from 'date-fns/formatDistanceToNow'
-import { es } from 'date-fns/locale'
-import { db } from '../firebaseConfig'
+import React, { useState, useEffect } from "react";
+import UseInformacionPeliculas from "../hooks/useInformacionPeliculas";
+import Styled from "@emotion/styled";
+import imagenUsuario from "../usuario.svg";
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import { es } from "date-fns/locale";
+import { db } from "../firebaseConfig";
 
 const CardFlex = Styled.div`
 
@@ -32,7 +32,7 @@ const CardFlex = Styled.div`
     
 
     
-`
+`;
 const CardFlexContenido = Styled.div`
     
     padding: 1rem 3rem;
@@ -50,7 +50,7 @@ const CardFlexContenido = Styled.div`
     span{
         font-size: 2.5rem;
     }
-`
+`;
 const ContenidoVotos = Styled.div`
     display: flex;
     justify-content: center;
@@ -66,7 +66,7 @@ const ContenidoVotos = Styled.div`
     p{
         margin: 0;
     }
-`
+`;
 const Boton = Styled.h4`
     color: #fff;
     background-color: #53555a;
@@ -79,7 +79,7 @@ const Boton = Styled.h4`
     :hover {
         cursor: pointer;
     }
-`
+`;
 const ContenedorReproductor = Styled.div`
 
     padding: 1rem;
@@ -105,7 +105,7 @@ const ContenedorReproductor = Styled.div`
             height: 500px;
         }
     }
-`
+`;
 const ContenedorComentarios = Styled.div`
     width: 80%;
     display: flex;
@@ -151,7 +151,7 @@ const ContenedorComentarios = Styled.div`
 
         }
     }
-`
+`;
 
 const FormularioComentarios = Styled.div`
     display: flex;
@@ -207,349 +207,367 @@ const FormularioComentarios = Styled.div`
             }
         }
     }
-`
+`;
 
 const VerPelicula = ({ match, history }) => {
+  const [datosPelicula, guardarDatosPelicula] = useState(null);
 
-    const [datosPelicula, guardarDatosPelicula] = useState(null)
+  const { peliculas } = UseInformacionPeliculas();
 
-    const { peliculas } = UseInformacionPeliculas()
+  const [comentarios, setComentarios] = useState({
+    nombre: "",
+    nombreUsuario: "",
+    comentario: "",
+    creado: Date.now(),
+  });
 
-    const [comentarios, setComentarios] = useState({
-        nombre: '',
-        nombreUsuario: '',
-        comentario: '',
+  const [comentariosDbTodos, setComentariosDbTodos] = useState([]);
+
+  const [comentariosDb, setComentariosDb] = useState([]);
+
+  const [consultarDb, setConsultarDb] = useState(false);
+
+  const [yaVotaste, setYaVotaste] = useState(false);
+
+  const [votosGusta, setVotosGusta] = useState([]);
+
+  const [votosNoGusta, setVotosNoGusta] = useState([]);
+
+  const [votosGustaActual, setVotosGustaActual] = useState([]);
+
+  const [votosNoGustaActual, setVotosNoGustaActual] = useState([]);
+
+  /* verifica los comentarios  */
+  useEffect(() => {
+    if (comentariosDbTodos.length > 0) {
+      const resultado = comentariosDbTodos.filter(
+        (dato) => dato.nombre === datosPelicula[0].nombre
+      );
+
+      console.log(resultado);
+      setComentariosDb(resultado);
+    }
+  }, [datosPelicula, comentariosDbTodos]);
+
+  /* verificar me gusta */
+  useEffect(() => {
+    if (votosGusta.length > 0) {
+      const resultado = votosGusta.filter(
+        (dato) => dato.nombre === datosPelicula[0].nombre
+      );
+
+      setVotosGustaActual(resultado);
+    }
+  }, [votosGusta, consultarDb]);
+
+  /* verificar no me gusta */
+  useEffect(() => {
+    if (votosNoGusta.length > 0) {
+      const resultado = votosNoGusta.filter(
+        (dato) => dato.nombre === datosPelicula[0].nombre
+      );
+
+      setVotosNoGustaActual(resultado);
+    }
+  }, [votosNoGusta, consultarDb]);
+
+  //traer todos los votos me gusta
+  useEffect(() => {
+    const obtenerProductos = () => {
+      db.collection("votosGustaPeliculas").onSnapshot(manejarSnapshot);
+    };
+
+    obtenerProductos();
+
+    function manejarSnapshot(snapshot) {
+      const resultado = snapshot.docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      });
+      setVotosGusta(resultado);
+    }
+  }, [consultarDb]);
+
+  //traer todos los votos no me gusta
+  useEffect(() => {
+    const obtenerProductos = () => {
+      db.collection("votosNoGustaPeliculas").onSnapshot(manejarSnapshot);
+    };
+
+    obtenerProductos();
+
+    function manejarSnapshot(snapshot) {
+      const resultado = snapshot.docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      });
+      setVotosNoGusta(resultado);
+    }
+  }, [consultarDb]);
+
+  //traer todos los comentarios
+  useEffect(() => {
+    const obtenerProductos = () => {
+      db.collection("comentariosPeliculas")
+        .orderBy("creado", "desc")
+        .onSnapshot(manejarSnapshot);
+    };
+
+    obtenerProductos();
+
+    function manejarSnapshot(snapshot) {
+      const resultado = snapshot.docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      });
+      setComentariosDbTodos(resultado);
+    }
+  }, [consultarDb]);
+
+  useEffect(() => {
+    if (peliculas.length > 0 && datosPelicula !== null) {
+      const resultado = peliculas.filter(
+        (pelicula) => pelicula.nombre === datosPelicula[0].nombre
+      );
+
+      console.log(resultado[0].nombre);
+
+      setComentarios({
+        ...comentarios,
+        nombre: resultado[0].nombre,
+      });
+    }
+  }, [datosPelicula]);
+
+  useEffect(() => {
+    const revisarPelicula = () => {
+      const prueba = peliculas.filter(
+        (pelicula) => pelicula.id === Number(match.params.id)
+      );
+
+      guardarDatosPelicula(prueba);
+    };
+
+    revisarPelicula();
+  }, []);
+
+  const volverSeleccion = () => {
+    history.push("/");
+  };
+
+  const enviarComentario = async (e) => {
+    e.preventDefault();
+
+    if (comentarios.nombreUsuario !== "" && comentarios.comentario !== "") {
+      await db.collection("comentariosPeliculas").add(comentarios);
+
+      setComentarios({
+        ...comentarios,
+        nombreUsuario: "",
+        comentario: "",
         creado: Date.now(),
-    })
+      });
 
-    const [comentariosDbTodos, setComentariosDbTodos] = useState([])
+      setConsultarDb(true);
 
-    const [comentariosDb, setComentariosDb] = useState([])
+      setTimeout(() => {
+        setConsultarDb(false);
+      }, 3000);
+    }
+  };
+  console.log(votosGusta);
 
-    const [consultarDb, setConsultarDb] = useState(false)
+  const gusta = async (nombre) => {
+    if (votosGustaActual.length > 0 && !yaVotaste) {
+      const verificacion = votosGusta.filter((item) => item.nombre === nombre);
 
-    const [yaVotaste, setYaVotaste] = useState(false)
+      const editarVotos = await db
+        .collection("votosGustaPeliculas")
+        .doc(verificacion[0].id);
 
-    const [votosGusta, setVotosGusta] = useState([])
+      setYaVotaste(true);
 
-    const [votosNoGusta, setVotosNoGusta] = useState([])
+      return editarVotos.update({
+        votos: verificacion[0].votos + 1,
+      });
+    } else {
+      const votosgusta = {
+        nombre: nombre,
+        votos: 1,
+      };
 
-    const [votosGustaActual, setVotosGustaActual] = useState([])
+      if (!yaVotaste) {
+        await db.collection("votosGustaPeliculas").add(votosgusta);
 
-    const [votosNoGustaActual, setVotosNoGustaActual] = useState([])
-
-    /* verifica los comentarios  */
-    useEffect(() => {
-        if (comentariosDbTodos.length > 0) {
-            const resultado = comentariosDbTodos.filter(dato => dato.nombre === datosPelicula[0].nombre)
-
-            console.log(resultado)
-            setComentariosDb(resultado)
-        }
-
-
-    }, [datosPelicula, comentariosDbTodos])
-
-    /* verificar me gusta */
-    useEffect(() => {
-        if (votosGusta.length > 0) {
-
-            const resultado = votosGusta.filter(dato => dato.nombre === datosPelicula[0].nombre)
-
-            setVotosGustaActual(resultado)
-        }
-    }, [votosGusta, consultarDb])
-
-    /* verificar no me gusta */
-    useEffect(() => {
-        if (votosNoGusta.length > 0) {
-
-            const resultado = votosNoGusta.filter(dato => dato.nombre === datosPelicula[0].nombre)
-
-            setVotosNoGustaActual(resultado)
-
-        }
-    }, [votosNoGusta, consultarDb])
-
-    //traer todos los votos me gusta
-    useEffect(() => {
-        const obtenerProductos = () => {
-            db.collection('votosGustaPeliculas').onSnapshot(manejarSnapshot)
-        }
-
-        obtenerProductos()
-
-        function manejarSnapshot(snapshot) {
-            const resultado = snapshot.docs.map(doc => {
-                return {
-                    id: doc.id,
-                    ...doc.data()
-                }
-            })
-            setVotosGusta(resultado)
-
-        }
-    }, [consultarDb])
-
-    //traer todos los votos no me gusta
-    useEffect(() => {
-        const obtenerProductos = () => {
-            db.collection('votosNoGustaPeliculas').onSnapshot(manejarSnapshot)
-        }
-
-        obtenerProductos()
-
-        function manejarSnapshot(snapshot) {
-            const resultado = snapshot.docs.map(doc => {
-                return {
-                    id: doc.id,
-                    ...doc.data()
-                }
-            })
-            setVotosNoGusta(resultado)
-
-        }
-    }, [consultarDb])
-
-    //traer todos los comentarios
-    useEffect(() => {
-        const obtenerProductos = () => {
-            db.collection('comentariosPeliculas').orderBy('creado', 'desc').onSnapshot(manejarSnapshot)
-        }
-
-        obtenerProductos()
-
-        function manejarSnapshot(snapshot) {
-            const resultado = snapshot.docs.map(doc => {
-                return {
-                    id: doc.id,
-                    ...doc.data()
-                }
-            })
-            setComentariosDbTodos(resultado)
-
-        }
-    }, [consultarDb])
-
-    useEffect(() => {
-
-        if (peliculas.length > 0 && datosPelicula !== null) {
-            const resultado = peliculas.filter(pelicula => pelicula.nombre === datosPelicula[0].nombre)
-
-            console.log(resultado[0].nombre)
-
-            setComentarios({
-                ...comentarios,
-                nombre: resultado[0].nombre,
-
-            })
-        }
-    }, [datosPelicula])
-
-    useEffect(() => {
-        const revisarPelicula = () => {
-
-            const prueba = peliculas.filter(pelicula => pelicula.id === Number(match.params.id))
-
-            guardarDatosPelicula(prueba)
-
-        }
-
-        revisarPelicula()
-
-    }, [])
-
-    const volverSeleccion = () => {
-        history.push('/')
+        setYaVotaste(true);
+      }
     }
 
-    const enviarComentario = async e => {
-        e.preventDefault()
+    setYaVotaste(true);
 
-        if (comentarios.nombreUsuario !== '' && comentarios.comentario !== '') {
-            await db.collection('comentariosPeliculas').add(comentarios)
+    setConsultarDb(true);
 
-            setComentarios({
-                ...comentarios,
-                nombreUsuario: '',
-                comentario: '',
-                creado: Date.now(),
+    setTimeout(() => {
+      setConsultarDb(false);
+    }, 3000);
+  };
 
-            })
+  const noGusta = async (nombre) => {
+    if (votosNoGustaActual.length > 0 && !yaVotaste) {
+      const verificacion = votosNoGusta.filter(
+        (item) => item.nombre === nombre
+      );
 
-            setConsultarDb(true)
+      const editarVotos = await db
+        .collection("votosNoGustaPeliculas")
+        .doc(verificacion[0].id);
 
-            setTimeout(() => {
-                setConsultarDb(false)
-            }, 3000);
+      setYaVotaste(true);
 
-        }
+      return editarVotos.update({
+        votos: verificacion[0].votos + 1,
+      });
+    } else {
+      const votosNoGusta = {
+        nombre: nombre,
+        votos: 1,
+      };
 
-    }
-    console.log(votosGusta)
+      if (!yaVotaste) {
+        await db.collection("votosNoGustaPeliculas").add(votosNoGusta);
 
-    const gusta = async nombre => {
-
-        if (votosGustaActual.length > 0 && !yaVotaste) {
-            const verificacion = votosGusta.filter(item => item.nombre === nombre)
-
-            const editarVotos = await db.collection('votosGustaPeliculas').doc(verificacion[0].id)
-
-            setYaVotaste(true)
-
-            return editarVotos.update({
-                votos: verificacion[0].votos + 1
-            })
-
-
-
-        } else {
-            const votosgusta = {
-                nombre: nombre,
-                votos: 1
-            }
-
-            if (!yaVotaste) {
-                await db.collection('votosGustaPeliculas').add(votosgusta)
-
-                setYaVotaste(true)
-            }
-
-        }
-
-        setYaVotaste(true)
-
-        setConsultarDb(true)
-
-        setTimeout(() => {
-            setConsultarDb(false)
-        }, 3000);
-
+        setYaVotaste(true);
+      }
     }
 
-    const noGusta = async nombre => {
+    setConsultarDb(true);
 
-        if (votosNoGustaActual.length > 0 && !yaVotaste) {
-            const verificacion = votosNoGusta.filter(item => item.nombre === nombre)
+    setTimeout(() => {
+      setConsultarDb(false);
+    }, 3000);
+  };
 
-            const editarVotos = await db.collection('votosNoGustaPeliculas').doc(verificacion[0].id)
-
-            setYaVotaste(true)
-
-            return editarVotos.update({
-                votos: verificacion[0].votos + 1
-            })
-        } else {
-            const votosNoGusta = {
-                nombre: nombre,
-                votos: 1
-            }
-
-            if (!yaVotaste) {
-                await db.collection('votosNoGustaPeliculas').add(votosNoGusta)
-
-                setYaVotaste(true)
-            }
-        }  
-
-        setConsultarDb(true)
-
-        setTimeout(() => {
-            setConsultarDb(false)
-        }, 3000);
-    }
-
-    return (
+  return (
+    <>
+      {datosPelicula && (
         <>
-            { datosPelicula &&
-                <>
-                    <CardFlex>
-                        <img src={datosPelicula[0].imagen} alt="" />
-                        <CardFlexContenido>
-                            <h2>{datosPelicula[0].nombre}</h2>
-                            <h4> <span>Categoria:</span>  {datosPelicula[0].categoria}</h4>
-                            <p>{datosPelicula[0].descripcion}</p>
-                            <ContenidoVotos>
-                                <div>
-                                    <i className="fas fa-thumbs-up" onClick={() => gusta(datosPelicula[0].nombre)}></i>
-                                    {votosGustaActual.length > 0
-                                        ? <p>{votosGustaActual[0].votos}</p>
-                                        : <p>0</p>
+          <CardFlex>
+            <img src={datosPelicula[0].imagen} alt="" />
+            <CardFlexContenido>
+              <h2>{datosPelicula[0].nombre}</h2>
+              <h4>
+                {" "}
+                <span>Categoria:</span> {datosPelicula[0].categoria}
+              </h4>
+              <p>{datosPelicula[0].descripcion}</p>
+              <ContenidoVotos>
+                <div>
+                  <i
+                    className="fas fa-thumbs-up"
+                    onClick={() => gusta(datosPelicula[0].nombre)}
+                  ></i>
+                  {votosGustaActual.length > 0 ? (
+                    <p>{votosGustaActual[0].votos}</p>
+                  ) : (
+                    <p>0</p>
+                  )}
+                </div>
+                <div>
+                  <i
+                    className="fas fa-thumbs-down"
+                    onClick={() => noGusta(datosPelicula[0].nombre)}
+                  ></i>
+                  {votosNoGustaActual.length > 0 ? (
+                    <p>{votosNoGustaActual[0].votos}</p>
+                  ) : (
+                    <p>0</p>
+                  )}
+                </div>
+              </ContenidoVotos>
+              <Boton onClick={() => volverSeleccion()}>Volver</Boton>
+            </CardFlexContenido>
+          </CardFlex>
 
-                                    }
+          <ContenedorReproductor>
+            <iframe
+              src={datosPelicula[0].url}
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen="true"
+              scrolling="no"
+              webkitallowfullscreen="true"
+              mozallowfullscreen="true"
+              width="700"
+              height="430"
+            ></iframe>
+          </ContenedorReproductor>
 
-                                </div>
-                                <div>
-                                    <i className="fas fa-thumbs-down" onClick={() => noGusta(datosPelicula[0].nombre)}></i>
-                                    {votosNoGustaActual.length > 0
-                                        ? <p>{votosNoGustaActual[0].votos}</p>
-                                        : <p>0</p>
+          <FormularioComentarios>
+            <form onSubmit={enviarComentario}>
+              <h2>Escribe Tu Comentario Sobre esta Pelicula</h2>
+              <input
+                type="text"
+                value={comentarios.nombreUsuario}
+                name="nombreUsuario"
+                placeholder="Escribe tu nombre"
+                onChange={(e) =>
+                  setComentarios({
+                    ...comentarios,
+                    [e.target.name]: e.target.value,
+                  })
+                }
+              />
+              <br />
 
-                                    }
-                                </div>
-                            </ContenidoVotos>
-                            <Boton onClick={() => volverSeleccion()}>Volver</Boton>
-                        </CardFlexContenido>
+              <textarea
+                name="comentario"
+                value={comentarios.comentario}
+                cols="30"
+                rows="7"
+                placeholder="Que piensas de esta pelicula"
+                onChange={(e) =>
+                  setComentarios({
+                    ...comentarios,
+                    [e.target.name]: e.target.value,
+                  })
+                }
+              ></textarea>
+              <br />
+              <button>Comentar</button>
+            </form>
+          </FormularioComentarios>
 
-                    </CardFlex>
-
-                    <ContenedorReproductor>
-                        <iframe src={datosPelicula[0].url} frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen='true' scrolling="no" webkitallowfullscreen="true" mozallowfullscreen="true" width="700" height="430" ></iframe>
-                    </ContenedorReproductor>
-
-                    <FormularioComentarios>
-                        <form
-                            onSubmit={enviarComentario}
-                        >
-                            <h2>Escribe Tu Comentario Sobre esta Pelicula</h2>
-                            <input
-                                type="text"
-                                value={comentarios.nombreUsuario}
-                                name='nombreUsuario'
-                                placeholder='Escribe tu nombre'
-                                onChange={e => setComentarios({ ...comentarios, [e.target.name]: e.target.value })} />
-                            <br />
-
-                            <textarea
-                                name="comentario"
-                                value={comentarios.comentario}
-                                cols="30"
-                                rows="7"
-                                placeholder='Que piensas de esta pelicula'
-                                onChange={e => setComentarios({ ...comentarios, [e.target.name]: e.target.value })}></textarea>
-                            <br />
-                            <button>Comentar</button>
-                        </form>
-                    </FormularioComentarios>
-
-                    { comentariosDb.length !== 0 &&
-
-                        <ContenedorComentarios>
-                            {comentariosDb.map(comentario => (
-                                <div className='comentario'>
-                                    <div className='imagen-nombre'>
-                                        <img src={imagenUsuario} alt={imagenUsuario} />
-                                        <h3>{comentario.nombreUsuario}</h3>
-                                    </div>
-                                    <div className='contenido-comentario'>
-                                        <h4>{comentario.comentario}</h4>
-                                        <p>Publicado hace: {formatDistanceToNow(new Date(comentario.creado), { locale: es })}</p>
-                                    </div>
-
-                                </div>
-                            ))}
-
-
-                        </ContenedorComentarios>
-                    }
-                </>
-            }
-
-
+          {comentariosDb.length !== 0 && (
+            <ContenedorComentarios>
+              {comentariosDb.map((comentario) => (
+                <div className="comentario">
+                  <div className="imagen-nombre">
+                    <img src={imagenUsuario} alt={imagenUsuario} />
+                    <h3>{comentario.nombreUsuario}</h3>
+                  </div>
+                  <div className="contenido-comentario">
+                    <h4>{comentario.comentario}</h4>
+                    <p>
+                      Publicado hace:{" "}
+                      {formatDistanceToNow(new Date(comentario.creado), {
+                        locale: es,
+                      })}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </ContenedorComentarios>
+          )}
         </>
-    );
-}
+      )}
+    </>
+  );
+};
 
 export default VerPelicula;

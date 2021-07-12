@@ -1,6 +1,66 @@
 const useInformacionPeliculas = () => {
   const peliculas = [
     {
+      id: 131,
+      imagen:
+        "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/2JG46f4JtCJTUf2z9UbiL9qusOP.jpg",
+      nombre: "La calle del terror, Parte 1: 1994 (2021)",
+      descripcion:
+        "En 1994, un grupo de adolescentes descubre que los terribles sucesos que han asolado su ciudad durante generaciones están conectados y que pueden ser los próximos objetivos.",
+      categoria: "Terror, Misterio",
+      url: "https://jawcloud.co/embed-zsx6ptkib24j.html",
+    },
+    {
+      id: 130,
+      imagen:
+        "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/v1XE3dtqd9zsEET0EMkxBgXYP6T.jpg",
+      nombre: "Viuda negra (2021)",
+      descripcion:
+        "Natasha Romanoff, alias Viuda Negra, se enfrenta a las partes más oscuras de su historia cuando surge una peligrosa conspiración con vínculos con su pasado. Perseguida por una fuerza que no se detendrá ante nada para acabar con ella, Natasha debe enfrentarse a su historia como espía y a las relaciones rotas que dejó a su paso mucho antes de convertirse en una Vengadora.",
+      categoria: "Accion, Aventura, Suspenso",
+      url: "https://jawcloud.co/embed-gyle3mh8tefd.html",
+    },
+    {
+      id: 129,
+      imagen:
+        "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/vgpzkh96GnlRxUYZuOpdZT78T2Q.jpg",
+      nombre: "Spiral: Saw (2021)",
+      descripcion:
+        "El detective descarado Ezekiel 'Zeke' Banks, y su compañero novato, se hacen cargo de una espeluznante investigación sobre varios asesinatos espansosos. Zeke, involuntariamente, se vera atrapado en el morboso juego del asesino.",
+      categoria: "Suspenso, Misterio, Terror",
+      url: "https://jawcloud.co/embed-97eb63pq4ykb.html",
+    },
+    {
+      id: 128,
+      imagen:
+        "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/iNOCVFyrsykGqT48JNotgFF9XCf.jpg",
+      nombre: "Un lugar tranquilo 2 (2021)",
+      descripcion:
+        "Tras los fatales acontecimientos sucedidos en la primera parte, la familia Abbot debe enfrentarse a los peligros del mundo exterior mientras luchan en silencio por sobrevivir. Forzados a aventurarse en lo desconocido, pronto se dan cuenta de que las criaturas que cazan orientadas por el sonido no son la única amenaza que acecha más allá del camino de arena. Secuela de la exitosa producción 'Un lugar tranquilo' (A Quiet Place, 2018).",
+      categoria: "Suspenso, Ciencia ficcion, Terror",
+      url: "https://jawcloud.co/embed-jf8deqcxiimh.html",
+    },
+    {
+      id: 127,
+      imagen:
+        "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/y1Tk1LUwS3nRlugiXnag6Bu1ToG.jpg",
+      nombre: "Día de redención (2021)",
+      descripcion:
+        "Acaba de regresar a casa, y la esposa del condecorado capitán de infantería de marina estadounidense Brad Paxton (Gary Dourdan), Kate, es secuestrada por un grupo terrorista mientras trabajaba en Marruecos. Se ve obligado a volver a la acción para una operación atrevida y mortal para salvar a la mujer que ama.",
+      categoria: "Suspenso Accion",
+      url: "https://streamtape.com/e/0Jm6ApYKA6Fm2v",
+    },
+    {
+      id: 126,
+      imagen:
+        "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/85J1DwZowIlKFOF7jllgCD3iHhx.jpg",
+      nombre: "Jefe en pañales 2 (2021)",
+      descripcion:
+        "Los hermanos Templeton se han convertido en adultos y se han alejado el uno del otro, pero un nuevo jefe bebé con un enfoque de vanguardia está a punto de unirlos nuevamente e inspirar un nuevo negocio familiar.",
+      categoria: "Animación, Comedia, Aventura, Familia",
+      url: "https://streamtape.com/e/Mo3RYQmp2RH0kK",
+    },
+    {
       id: 125,
       imagen:
         "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/hBcdtoe3Vu8MacviGjkJRd0U1BG.jpg",

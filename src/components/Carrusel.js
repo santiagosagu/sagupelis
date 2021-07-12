@@ -1,6 +1,7 @@
-import React from 'react'
-import Slider from 'infinite-react-carousel'
-import Styled from '@emotion/styled'
+import React from "react";
+import Styled from "@emotion/styled";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from "react-responsive-carousel";
 
 const Contenedor = Styled.div`
 
@@ -8,23 +9,25 @@ const Contenedor = Styled.div`
 
 
     @media(min-width: 768px){
-        max-width: 1200px;
-        align-items: center;
-        margin: 0 auto;
-        text-align: center;
-    }
+      display: flex;
+      justify-content: center;
 
-    h2 {
-        font-size: 3rem;
-        text-align: center;
-        margin-bottom: 5rem;
+      h2 {
+          font-size: 3rem;
+          text-align: center;
+          margin: 0;
+      }
     }
-`
+`;
+const ContenedorCarrusel = Styled.div`
 
+  @media(min-width: 768px){
+    width: 600px;
+
+  }
+`;
 
 const Img = Styled.img`
-
-
 
 @media (max-width: 700px) {
     width: 100%;
@@ -33,49 +36,43 @@ const Img = Styled.img`
 }
 
 @media(min-width: 768px){
-        margin: 2rem 2rem 0.5rem 2rem;
-        width: 50%;
-        height: 600px;
+        width: 100%;
+        height: 750px;
+        border-radius: 1rem;
     }
 
     
-`
+`;
 
 const Carrusel = ({ catalogo }) => {
+  console.log(catalogo);
 
-    console.log(catalogo)
-
-    return (
-        <>
-
-
-            <Contenedor>
-                <Slider autoplay='true' autoplaySpeed='4000'> 
-
-                    {
-                        catalogo.map(pelicula =>
-
-                            <>
-                                
-
-                                <div>
-                                    <Img src={pelicula.imagen} alt={pelicula.nombre} />
-                                    <h2>{pelicula.nombre}</h2>
-                                </div>
-
-                                
-
-                            </>
-                        )
-                    }
-
-                </Slider>
-            </Contenedor>
-
-
-
-        </>
-    );
-}
+  return (
+    <>
+      <Contenedor>
+        <ContenedorCarrusel>
+          <Carousel
+            autoPlay
+            infiniteLoop
+            centerSlidePercentage={10}
+            width="100%"
+            thumbWidth={30}
+            dynamicHeight
+            emulateTouch
+            showThumbs={false}
+            renderIndicator={false}
+            showStatus={false}
+          >
+            {catalogo.map((pelicula) => (
+              <div>
+                <Img src={pelicula.imagen} alt={pelicula.nombre} />
+              </div>
+            ))}
+          </Carousel>
+        </ContenedorCarrusel>
+      </Contenedor>
+    </>
+  );
+};
 
 export default Carrusel;
