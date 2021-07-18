@@ -385,13 +385,21 @@ const Inicio = ({ history }) => {
   const [verPelicula, guardarVerPelicula] = useState(false);
   const [verSerie, guardarVerSerie] = useState(false);
 
-  const [todasPeliculas, guardarTodasPeliculas] = useState();
-
-  const { peliculas } = useInformacionPeliculas();
-  const { series } = useInformacionSeries();
-
   const [peliculasDB, setPeliculasDB] = useState([]);
   const [seriesDB, setSeriesDB] = useState([]);
+
+  const [peliculasDBCatalogo, setPeliculasDBCatalogo] = useState({});
+
+  const [peliculaNueva] = useState({
+    id: 132,
+    imagen:
+      "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/uHDF2320SbWDTP1FMZ8LgEIHew2.jpg",
+    nombre: "Space Jam Nuevas leyendas (2021)",
+    descripcion:
+      "Secuela de la cinta original de 1996, Space Jam, protagonizada por Michael Jordan. En esta segunda parte, la super estrella de la NBA es LeBron James, quien queda atrapado junto a su hijo Dom en un extraño lugar, un espacio digital de una fuerza todopoderosa y malvada conocida como A.I. Para volver a casa y poner a salvo a su hijo, el jugador de baloncesto deberá unir fuerzas con Bugs Bunny, Lola Bunny y el resto de personajes de los Looney Tunes para enfrentarse en un partido de baloncesto a los campeones digitalizados por A.I.",
+    categoria: "Animacion, Comedia, Familia, Ciencia ficcion",
+    url: "https://streamtape.com/e/9kqpWaYx01faWdk",
+  });
 
   const peliculaSeleccionada = (pelicula) => {
     guardarDatosPelicula(pelicula);
@@ -434,6 +442,28 @@ const Inicio = ({ history }) => {
     }
   }, []);
 
+  // traer todos las peliculas para catalogo
+  useEffect(() => {
+    const obtenerProductos = () => {
+      db.collection("peliculas")
+        .orderBy("id", "desc")
+        .limit(50)
+        .onSnapshot(manejarSnapshot);
+    };
+
+    obtenerProductos();
+
+    function manejarSnapshot(snapshot) {
+      const resultado = snapshot.docs.map((doc) => {
+        return {
+          ids: doc.id,
+          ...doc.data(),
+        };
+      });
+      setPeliculasDBCatalogo(resultado);
+    }
+  }, []);
+
   // traer todas las series
   useEffect(() => {
     const obtenerProductos = () => {
@@ -454,13 +484,13 @@ const Inicio = ({ history }) => {
   }, []);
 
   // useEffect(() => {
-  //   const guardarPeli = async () => {
+  //   const guardarPeliculas = async () => {
   //     await peliculas.map((item) => {
   //       db.collection("peliculas").add(item);
   //     });
   //   };
 
-  //   guardarPeli();
+  //   guardarPeliculas();
   // }, []);
 
   // useEffect(() => {
@@ -473,11 +503,31 @@ const Inicio = ({ history }) => {
   //   guardarSerie();
   // }, []);
 
+  // useEffect(() => {
+  //   if (peliculasDB && peliculaNueva) {
+  //     const guardarPeli = () => {
+  //       const resultado = peliculasDB.filter(
+  //         (item) => item.id === peliculaNueva.id
+  //       );
+
+  //       if (resultado.length === 0) {
+  //         return db.collection("peliculas").add(peliculaNueva);
+  //       }
+  //     };
+
+  //     guardarPeli();
+  //   }
+  // }, [peliculasDB, peliculaNueva]);
+
   return (
     <>
       {!verPelicula && !verSerie ? (
         <>
-          <Carrusel catalogo={estrenos} />
+          {peliculasDBCatalogo.length !== 0 ? (
+            <Carrusel catalogo={peliculasDBCatalogo} />
+          ) : (
+            <h1>Loading</h1>
+          )}
 
           <section>
             <TituloSeccion>Peliculas</TituloSeccion>

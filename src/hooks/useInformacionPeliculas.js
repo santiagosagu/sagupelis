@@ -18,7 +18,7 @@ const useInformacionPeliculas = () => {
       descripcion:
         "Natasha Romanoff, alias Viuda Negra, se enfrenta a las partes más oscuras de su historia cuando surge una peligrosa conspiración con vínculos con su pasado. Perseguida por una fuerza que no se detendrá ante nada para acabar con ella, Natasha debe enfrentarse a su historia como espía y a las relaciones rotas que dejó a su paso mucho antes de convertirse en una Vengadora.",
       categoria: "Accion, Aventura, Suspenso",
-      url: "https://jawcloud.co/embed-gyle3mh8tefd.html",
+      url: "https://nupload.me/watch/h6LczgX0yAyVqWlbFO0WBiPYgDJftfMA7lCj4kITQJ8?h=",
     },
     {
       id: 129,
@@ -38,7 +38,7 @@ const useInformacionPeliculas = () => {
       descripcion:
         "Tras los fatales acontecimientos sucedidos en la primera parte, la familia Abbot debe enfrentarse a los peligros del mundo exterior mientras luchan en silencio por sobrevivir. Forzados a aventurarse en lo desconocido, pronto se dan cuenta de que las criaturas que cazan orientadas por el sonido no son la única amenaza que acecha más allá del camino de arena. Secuela de la exitosa producción 'Un lugar tranquilo' (A Quiet Place, 2018).",
       categoria: "Suspenso, Ciencia ficcion, Terror",
-      url: "https://jawcloud.co/embed-jf8deqcxiimh.html",
+      url: "https://streamtape.com/e/kWWbmqlo8QIOVk6",
     },
     {
       id: 127,

@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import useInformacionSeries from '../hooks/useInformacionSeries';
-import Styled from '@emotion/styled'
-import imagenUsuario from '../usuario.svg'
-import formatDistanceToNow from 'date-fns/formatDistanceToNow'
-import { es } from 'date-fns/locale'
-import { db } from '../firebaseConfig'
-
+/* eslint-disable jsx-a11y/iframe-has-title */
+import React, { useState, useEffect } from "react";
+import useInformacionSeries from "../hooks/useInformacionSeries";
+import Styled from "@emotion/styled";
+import imagenUsuario from "../usuario.svg";
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import { es } from "date-fns/locale";
+import { db } from "../firebaseConfig";
 
 const CardFlex = Styled.div`
 
@@ -31,7 +31,7 @@ const CardFlex = Styled.div`
     
 
     
-`
+`;
 const CardFlexContenido = Styled.div`
     margin: 1rem 3rem;
 
@@ -43,7 +43,7 @@ const CardFlexContenido = Styled.div`
     span{
         font-size: 2.5rem;
     }
-`
+`;
 
 const Boton = Styled.h4`
     color: #fff;
@@ -57,7 +57,7 @@ const Boton = Styled.h4`
     :hover {
         cursor: pointer;
     }
-`
+`;
 const ContenidoVotos = Styled.div`
     display: flex;
     justify-content: center;
@@ -73,7 +73,7 @@ const ContenidoVotos = Styled.div`
     p{
         margin: 0;
     }
-`
+`;
 
 const Contenedor = Styled.div`
     margin: 0 2rem;
@@ -103,7 +103,7 @@ const Contenedor = Styled.div`
                 border-radius: 5px;
             }
     }
-`
+`;
 const ContenedorTemporadas = Styled.div`
     select {
         padding: 1.2rem;
@@ -125,7 +125,7 @@ const ContenedorTemporadas = Styled.div`
     }
 
 
-`
+`;
 
 const Temporada = Styled.h3`
     text-transform: capitalize;
@@ -141,7 +141,7 @@ const Temporada = Styled.h3`
     @media (min-width: 768px) {
         margin: 2rem 0;
     }
-`
+`;
 
 const Tarjetas = Styled.div`
     display: flex;
@@ -172,7 +172,7 @@ const Tarjetas = Styled.div`
                 border-radius: 5px;
             }
     }
-`
+`;
 
 const Card = Styled.div`
     margin-right: 1.5rem;
@@ -194,7 +194,7 @@ const Card = Styled.div`
             cursor: pointer;
         }
     }
-`
+`;
 
 const CardImage = Styled.div`
     width: 15rem;
@@ -215,7 +215,7 @@ const CardImage = Styled.div`
         background-color:#fff;
         margin-bottom: 5rem;
     }
-`
+`;
 
 const ContenedorReproductor = Styled.div`
 
@@ -242,7 +242,7 @@ const ContenedorReproductor = Styled.div`
             height: 500px;
         }
     }
-`
+`;
 const ContenedorComentarios = Styled.div`
     width: 80%;
     display: flex;
@@ -288,7 +288,7 @@ const ContenedorComentarios = Styled.div`
 
         }
     }
-`
+`;
 
 const FormularioComentarios = Styled.div`
     display: flex;
@@ -344,428 +344,464 @@ const FormularioComentarios = Styled.div`
             }
         }
     }
-`
+`;
 
 const VerSerie = ({ match, history }) => {
+  const [datosSerie, guardarDatosSerie] = useState([]);
+  const [temporadaState, guardarTemporadaState] = useState("temporada 1");
+  const [temporadaSeleccionada, guardarTemporadaSeleccionada] = useState([]);
+  const [verCapitulo, guardaVerCapitulo] = useState(false);
+  const [urlCapitulo, guardarUrlCapitulo] = useState("");
+  const [mostrarEpisodios, guardarMostrarEpisodios] = useState(false);
+  const [series, setSeries] = useState([]);
 
-    const [datosSerie, guardarDatosSerie] = useState(null)
-    const [temporadaState, guardarTemporadaState] = useState('temporada 1')
-    const [temporadaSeleccionada, guardarTemporadaSeleccionada] = useState([])
-    const [verCapitulo, guardaVerCapitulo] = useState(false)
-    const [urlCapitulo, guardarUrlCapitulo] = useState('')
-    const [mostrarEpisodios, guardarMostrarEpisodios] = useState(false)
+  // traer todas las series
+  useEffect(() => {
+    const obtenerProductos = () => {
+      db.collection("series").onSnapshot(manejarSnapshot);
+    };
 
-    const { series } = useInformacionSeries()
+    obtenerProductos();
 
-    const [comentarios, setComentarios] = useState({
-        nombre: '',
-        nombreUsuario: '',
-        comentario: '',
+    function manejarSnapshot(snapshot) {
+      const resultado = snapshot.docs.map((doc) => {
+        return {
+          ids: doc.id,
+          ...doc.data(),
+        };
+      });
+      setSeries(resultado);
+    }
+  }, []);
+
+  //   const { series } = useInformacionSeries();
+
+  const [comentarios, setComentarios] = useState({
+    nombre: "",
+    nombreUsuario: "",
+    comentario: "",
+    creado: Date.now(),
+  });
+
+  const [comentariosDbTodos, setComentariosDbTodos] = useState([]);
+
+  const [comentariosDb, setComentariosDb] = useState([]);
+
+  const [consultarDb, setConsultarDb] = useState(false);
+
+  const [yaVotaste, setYaVotaste] = useState(false);
+
+  const [votosGusta, setVotosGusta] = useState([]);
+
+  const [votosNoGusta, setVotosNoGusta] = useState([]);
+
+  const [votosGustaActual, setVotosGustaActual] = useState([]);
+
+  const [votosNoGustaActual, setVotosNoGustaActual] = useState([]);
+
+  /* verificar me gusta */
+  useEffect(() => {
+    if (
+      votosGusta.length > 0 &&
+      datosSerie.length !== 0 &&
+      series.length !== 0
+    ) {
+      const resultado = votosGusta.filter(
+        (dato) => dato.nombre === datosSerie[0].nombre
+      );
+
+      setVotosGustaActual(resultado);
+    }
+  }, [votosGusta, consultarDb]);
+
+  /* verificar no me gusta */
+  useEffect(() => {
+    if (
+      votosNoGusta.length > 0 &&
+      datosSerie.length !== 0 &&
+      series.length !== 0
+    ) {
+      const resultado = votosNoGusta.filter(
+        (dato) => dato.nombre === datosSerie[0].nombre
+      );
+
+      setVotosNoGustaActual(resultado);
+    }
+  }, [votosNoGusta, consultarDb]);
+
+  //traer todos los votos me gusta
+  useEffect(() => {
+    const obtenerProductos = () => {
+      db.collection("votosGustaSeries").onSnapshot(manejarSnapshot);
+    };
+
+    obtenerProductos();
+
+    function manejarSnapshot(snapshot) {
+      const resultado = snapshot.docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      });
+      setVotosGusta(resultado);
+    }
+  }, [consultarDb]);
+
+  //traer todos los votos no me gusta
+  useEffect(() => {
+    const obtenerProductos = () => {
+      db.collection("votosNoGustaSeries").onSnapshot(manejarSnapshot);
+    };
+
+    obtenerProductos();
+
+    function manejarSnapshot(snapshot) {
+      const resultado = snapshot.docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      });
+      setVotosNoGusta(resultado);
+    }
+  }, [consultarDb]);
+
+  /* verificar comentarios */
+  useEffect(() => {
+    if (
+      comentariosDbTodos.length > 0 &&
+      datosSerie.length !== 0 &&
+      series.length !== 0
+    ) {
+      const resultado = comentariosDbTodos.filter(
+        (dato) => dato.nombre === datosSerie[0].nombre
+      );
+
+      setComentariosDb(resultado);
+    }
+  }, [datosSerie, comentariosDbTodos]);
+
+  //traer todos los comentarios
+  useEffect(() => {
+    const obtenerProductos = () => {
+      db.collection("comentariosSeries")
+        .orderBy("creado", "desc")
+        .onSnapshot(manejarSnapshot);
+    };
+
+    obtenerProductos();
+
+    function manejarSnapshot(snapshot) {
+      const resultado = snapshot.docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      });
+      setComentariosDbTodos(resultado);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (series.length > 0 && datosSerie.length !== 0) {
+      const resultado = series.filter(
+        (serie) => serie.nombre === datosSerie[0].nombre
+      );
+
+      console.log(resultado[0].nombre);
+
+      setComentarios({
+        ...comentarios,
+        nombre: resultado[0].nombre,
+      });
+    }
+  }, [datosSerie]);
+
+  useEffect(() => {
+    const revisarSerie = () => {
+      const prueba = series.filter(
+        (serie) => serie.id === Number(match.params.id)
+      );
+
+      guardarDatosSerie(prueba);
+    };
+
+    revisarSerie();
+  }, [series, match.params]);
+
+  useEffect(() => {
+    const funMostrarEpisosdios = () => {
+      if (datosSerie.length !== 0 && series.length !== 0) {
+        const resultado = datosSerie[0].temporadas.filter(
+          (temporada) => temporada.nombre === temporadaState
+        );
+
+        guardarTemporadaSeleccionada(resultado);
+      }
+    };
+
+    funMostrarEpisosdios();
+  }, [temporadaState, datosSerie]);
+
+  /* useEffect */
+  useEffect(() => {
+    const verificar = () => {
+      if (temporadaSeleccionada.length > 0) {
+        guardarMostrarEpisodios(true);
+      } else {
+        guardarMostrarEpisodios(false);
+      }
+    };
+
+    verificar();
+  }, [temporadaSeleccionada]);
+
+  const verEpisodio = (episodio) => {
+    guardaVerCapitulo(true);
+
+    guardarUrlCapitulo(episodio);
+  };
+
+  const volverSeleccion = () => {
+    history.push("/");
+  };
+
+  const enviarComentario = async (e) => {
+    e.preventDefault();
+
+    if (comentarios.nombreUsuario !== "" && comentarios.comentario !== "") {
+      await db.collection("comentariosSeries").add(comentarios);
+
+      setComentarios({
+        ...comentarios,
+        nombreUsuario: "",
+        comentario: "",
         creado: Date.now(),
-    })
+      });
 
-    const [comentariosDbTodos, setComentariosDbTodos] = useState([])
+      setConsultarDb(true);
 
-    const [comentariosDb, setComentariosDb] = useState([])
+      setTimeout(() => {
+        setConsultarDb(false);
+      }, 3000);
+    }
+  };
 
-    const [consultarDb, setConsultarDb] = useState(false)
+  const gusta = async (nombre) => {
+    if (votosGustaActual.length > 0 && !yaVotaste) {
+      const verificacion = votosGusta.filter((item) => item.nombre === nombre);
 
-    const [yaVotaste, setYaVotaste] = useState(false)
+      const editarVotos = await db
+        .collection("votosGustaSeries")
+        .doc(verificacion[0].id);
 
-    const [votosGusta, setVotosGusta] = useState([])
+      setYaVotaste(true);
 
-    const [votosNoGusta, setVotosNoGusta] = useState([])
+      return editarVotos.update({
+        votos: verificacion[0].votos + 1,
+      });
+    } else {
+      const votosGusta = {
+        nombre: nombre,
+        votos: 1,
+      };
 
-    const [votosGustaActual, setVotosGustaActual] = useState([])
+      if (!yaVotaste) {
+        await db.collection("votosGustaSeries").add(votosGusta);
 
-    const [votosNoGustaActual, setVotosNoGustaActual] = useState([])
-
-    /* verificar me gusta */
-    useEffect(() => {
-        if (votosGusta.length > 0) {
-
-            const resultado = votosGusta.filter(dato => dato.nombre === datosSerie[0].nombre)
-
-            setVotosGustaActual(resultado)
-        }
-    }, [votosGusta, consultarDb])
-
-    /* verificar no me gusta */
-    useEffect(() => {
-        if (votosNoGusta.length > 0) {
-
-            const resultado = votosNoGusta.filter(dato => dato.nombre === datosSerie[0].nombre)
-
-            setVotosNoGustaActual(resultado)
-
-        }
-    }, [votosNoGusta, consultarDb])
-
-    //traer todos los votos me gusta
-    useEffect(() => {
-        const obtenerProductos = () => {
-            db.collection('votosGustaSeries').onSnapshot(manejarSnapshot)
-        }
-
-        obtenerProductos()
-
-        function manejarSnapshot(snapshot) {
-            const resultado = snapshot.docs.map(doc => {
-                return {
-                    id: doc.id,
-                    ...doc.data()
-                }
-            })
-            setVotosGusta(resultado)
-
-        }
-    }, [consultarDb])
-
-    //traer todos los votos no me gusta
-    useEffect(() => {
-        const obtenerProductos = () => {
-            db.collection('votosNoGustaSeries').onSnapshot(manejarSnapshot)
-        }
-
-        obtenerProductos()
-
-        function manejarSnapshot(snapshot) {
-            const resultado = snapshot.docs.map(doc => {
-                return {
-                    id: doc.id,
-                    ...doc.data()
-                }
-            })
-            setVotosNoGusta(resultado)
-
-        }
-    }, [consultarDb])
-
-    /* verificar comentarios */
-    useEffect(() => {
-        if (comentariosDbTodos.length > 0) {
-            const resultado = comentariosDbTodos.filter(dato => dato.nombre === datosSerie[0].nombre)
-
-
-            setComentariosDb(resultado)
-        }
-
-
-    }, [datosSerie, comentariosDbTodos])
-
-    //traer todos los comentarios
-    useEffect(() => {
-        const obtenerProductos = () => {
-            db.collection('comentariosSeries').orderBy('creado', 'desc').onSnapshot(manejarSnapshot)
-        }
-
-        obtenerProductos()
-
-        function manejarSnapshot(snapshot) {
-            const resultado = snapshot.docs.map(doc => {
-                return {
-                    id: doc.id,
-                    ...doc.data()
-                }
-            })
-            setComentariosDbTodos(resultado)
-
-        }
-    }, [])
-
-    useEffect(() => {
-
-        if (series.length > 0 && datosSerie !== null) {
-            const resultado = series.filter(serie => serie.nombre === datosSerie[0].nombre)
-
-            console.log(resultado[0].nombre)
-
-            setComentarios({
-                ...comentarios,
-                nombre: resultado[0].nombre,
-
-            })
-        }
-    }, [datosSerie])
-
-    useEffect(() => {
-        const revisarSerie = () => {
-
-            const prueba = series.filter(serie => serie.id === Number(match.params.id))
-
-            guardarDatosSerie(prueba)
-
-
-        }
-
-        revisarSerie()
-
-    }, [])
-
-    useEffect(() => {
-        const funMostrarEpisosdios = () => {
-
-            if (datosSerie) {
-                const resultado = datosSerie[0].temporadas.filter(temporada => temporada.nombre === temporadaState)
-
-                guardarTemporadaSeleccionada(resultado)
-
-            }
-
-
-        }
-
-        funMostrarEpisosdios()
-
-    }, [temporadaState, datosSerie])
-
-    /* useEffect */
-    useEffect(() => {
-        const verificar = () => {
-            if (temporadaSeleccionada.length > 0) {
-                guardarMostrarEpisodios(true)
-            } else {
-                guardarMostrarEpisodios(false)
-            }
-        }
-
-        verificar()
-    }, [temporadaSeleccionada])
-
-    const verEpisodio = episodio => {
-        guardaVerCapitulo(true)
-
-        guardarUrlCapitulo(episodio)
-
-
+        setYaVotaste(true);
+      }
     }
 
-    const volverSeleccion = () => {
-        history.push('/')
+    setConsultarDb(true);
+
+    setTimeout(() => {
+      setConsultarDb(false);
+    }, 3000);
+  };
+
+  const noGusta = async (nombre) => {
+    if (votosNoGustaActual.length > 0 && !yaVotaste) {
+      const verificacion = votosNoGusta.filter(
+        (item) => item.nombre === nombre
+      );
+
+      const editarVotos = await db
+        .collection("votosNoGustaSeries")
+        .doc(verificacion[0].id);
+
+      setYaVotaste(true);
+
+      return editarVotos.update({
+        votos: verificacion[0].votos + 1,
+      });
+    } else {
+      const votosNoGusta = {
+        nombre: nombre,
+        votos: 1,
+      };
+
+      if (!yaVotaste) {
+        await db.collection("votosNoGustaSeries").add(votosNoGusta);
+
+        setYaVotaste(true);
+      }
     }
 
-    const enviarComentario = async e => {
-        e.preventDefault()
+    setConsultarDb(true);
 
-        if (comentarios.nombreUsuario !== '' && comentarios.comentario !== '') {
-            await db.collection('comentariosSeries').add(comentarios)
+    setTimeout(() => {
+      setConsultarDb(false);
+    }, 3000);
+  };
 
-            setComentarios({
-                ...comentarios,
-                nombreUsuario: '',
-                comentario: '',
-                creado: Date.now(),
-
-            })
-
-            setConsultarDb(true)
-
-            setTimeout(() => {
-                setConsultarDb(false)
-            }, 3000);
-
-        }
-
-    }
-
-    const gusta = async nombre => {
-
-        if (votosGustaActual.length > 0 && !yaVotaste) {
-            const verificacion = votosGusta.filter(item => item.nombre === nombre)
-
-            const editarVotos = await db.collection('votosGustaSeries').doc(verificacion[0].id)
-
-            setYaVotaste(true)
-
-            return editarVotos.update({
-                votos: verificacion[0].votos + 1
-            })
-        } else {
-            const votosGusta = {
-                nombre: nombre,
-                votos: 1
-            }
-
-            if (!yaVotaste) {
-                await db.collection('votosGustaSeries').add(votosGusta)
-
-                setYaVotaste(true)
-            }
-        }
-
-        setConsultarDb(true)
-
-        setTimeout(() => {
-            setConsultarDb(false)
-        }, 3000);
-
-    }
-
-    const noGusta = async nombre => {
-
-        if (votosNoGustaActual.length > 0 && !yaVotaste) {
-            const verificacion = votosNoGusta.filter(item => item.nombre === nombre)
-
-            const editarVotos = await db.collection('votosNoGustaSeries').doc(verificacion[0].id)
-
-            setYaVotaste(true)
-
-            return editarVotos.update({
-                votos: verificacion[0].votos + 1
-            })
-        } else {
-            const votosNoGusta = {
-                nombre: nombre,
-                votos: 1
-            }
-
-            if (!yaVotaste) {
-                await db.collection('votosNoGustaSeries').add(votosNoGusta)
-
-                setYaVotaste(true)
-            }
-        }
-
-        setConsultarDb(true)
-
-        setTimeout(() => {
-            setConsultarDb(false)
-        }, 3000);
-    }
-
-    return (
+  return (
+    <>
+      {datosSerie.length !== 0 && series.length !== 0 && (
         <>
-            { datosSerie &&
-                <>
-                    <CardFlex>
-                        <img src={datosSerie[0].imagen} alt="" />
-                        <CardFlexContenido>
-                            <h2>{datosSerie[0].nombre}</h2>
-                            <h4> <span>Categoria:</span>  {datosSerie[0].categoria}</h4>
-                            <p>{datosSerie[0].descripcion}</p>
-                            <ContenidoVotos>
-                                <div>
-                                    <i className="fas fa-thumbs-up" onClick={() => gusta(datosSerie[0].nombre)}></i>
-                                    {votosGustaActual.length > 0
-                                        ? <p>{votosGustaActual[0].votos}</p>
-                                        : <p>0</p>
+          <CardFlex>
+            <img src={datosSerie[0].imagen} alt="" />
+            <CardFlexContenido>
+              <h2>{datosSerie[0].nombre}</h2>
+              <h4>
+                {" "}
+                <span>Categoria:</span> {datosSerie[0].categoria}
+              </h4>
+              <p>{datosSerie[0].descripcion}</p>
+              <ContenidoVotos>
+                <div>
+                  <i
+                    className="fas fa-thumbs-up"
+                    onClick={() => gusta(datosSerie[0].nombre)}
+                  ></i>
+                  {votosGustaActual.length > 0 ? (
+                    <p>{votosGustaActual[0].votos}</p>
+                  ) : (
+                    <p>0</p>
+                  )}
+                </div>
+                <div>
+                  <i
+                    className="fas fa-thumbs-down"
+                    onClick={() => noGusta(datosSerie[0].nombre)}
+                  ></i>
+                  {votosNoGustaActual.length > 0 ? (
+                    <p>{votosNoGustaActual[0].votos}</p>
+                  ) : (
+                    <p>0</p>
+                  )}
+                </div>
+              </ContenidoVotos>
+              <Boton onClick={() => volverSeleccion()}>Volver</Boton>
+            </CardFlexContenido>
+          </CardFlex>
 
-                                    }
+          {verCapitulo ? (
+            <ContenedorReproductor>
+              <iframe
+                src={urlCapitulo}
+                allowfullscreen="true"
+                allowtransparency
+                allow="autoplay"
+                scrolling="no"
+                frameborder="0"
+              ></iframe>
+            </ContenedorReproductor>
+          ) : null}
 
-                                </div>
-                                <div>
-                                    <i className="fas fa-thumbs-down" onClick={() => noGusta(datosSerie[0].nombre)}></i>
-                                    {votosNoGustaActual.length > 0
-                                        ? <p>{votosNoGustaActual[0].votos}</p>
-                                        : <p>0</p>
+          <Contenedor>
+            <ContenedorTemporadas>
+              <select
+                name="temporada"
+                onChange={(e) => guardarTemporadaState(e.target.value)}
+              >
+                {datosSerie[0].temporadas.map((temporada) => {
+                  return (
+                    <option value={temporada.nombre}>{temporada.nombre}</option>
+                  );
+                })}
+              </select>
+            </ContenedorTemporadas>
 
-                                    }
-                                </div>
-                            </ContenidoVotos>
-                            <Boton onClick={() => volverSeleccion()}>Volver</Boton>
-                        </CardFlexContenido>
+            {mostrarEpisodios ? (
+              <Tarjetas>
+                {temporadaSeleccionada[0].episodios.map((episodio) => (
+                  <Card onClick={() => verEpisodio(episodio.url)}>
+                    <CardImage>
+                      <img
+                        src={datosSerie[0].imagen}
+                        alt={datosSerie[0].nombre}
+                      />
+                    </CardImage>
+                    <h4>{temporadaSeleccionada[0].nombre}</h4>
+                    <h3>{episodio.nombre}</h3>
+                  </Card>
+                ))}
+              </Tarjetas>
+            ) : null}
+          </Contenedor>
 
-                    </CardFlex>
+          <FormularioComentarios>
+            <form onSubmit={enviarComentario}>
+              <h2>Escribe Tu Comentario Sobre esta Pelicula</h2>
+              <input
+                type="text"
+                value={comentarios.nombreUsuario}
+                name="nombreUsuario"
+                placeholder="Escribe tu nombre"
+                onChange={(e) =>
+                  setComentarios({
+                    ...comentarios,
+                    [e.target.name]: e.target.value,
+                  })
+                }
+              />
+              <br />
 
-                    { verCapitulo
-                        ? <ContenedorReproductor >
-                            <iframe src={urlCapitulo} allowfullscreen='true' allowtransparency allow="autoplay" scrolling="no" frameborder="0"></iframe>
-                        </ContenedorReproductor>
-                        : null
+              <textarea
+                name="comentario"
+                value={comentarios.comentario}
+                cols="30"
+                rows="7"
+                placeholder="Que piensas de esta pelicula"
+                onChange={(e) =>
+                  setComentarios({
+                    ...comentarios,
+                    [e.target.name]: e.target.value,
+                  })
+                }
+              ></textarea>
+              <br />
+              <button>Comentar</button>
+            </form>
+          </FormularioComentarios>
 
-                    }
-
-
-                    <Contenedor>
-                        <ContenedorTemporadas>
-                            <select name="temporada" onChange={e => guardarTemporadaState(e.target.value)}>
-                                {
-                                    datosSerie[0].temporadas.map(temporada => {
-                                        return (
-                                            <option value={temporada.nombre}>{temporada.nombre}</option>
-                                        )
-                                    })
-                                }
-
-                            </select>
-                        </ContenedorTemporadas>
-
-                        {mostrarEpisodios
-                            ? <Tarjetas>
-
-                                {temporadaSeleccionada[0].episodios.map(episodio => (
-                                    <Card onClick={() => verEpisodio(episodio.url)}>
-                                        <CardImage >
-                                            <img src={datosSerie[0].imagen} alt={datosSerie[0].nombre} />
-                                        </CardImage>
-                                        <h4>{temporadaSeleccionada[0].nombre}</h4>
-                                        <h3>{episodio.nombre}</h3>
-
-                                    </Card>
-                                ))}
-                            </Tarjetas>
-
-                            : null
-
-                        }
-
-                    </Contenedor>
-
-                    <FormularioComentarios>
-                        <form
-                            onSubmit={enviarComentario}
-                        >
-                            <h2>Escribe Tu Comentario Sobre esta Pelicula</h2>
-                            <input
-                                type="text"
-                                value={comentarios.nombreUsuario}
-                                name='nombreUsuario'
-                                placeholder='Escribe tu nombre'
-                                onChange={e => setComentarios({ ...comentarios, [e.target.name]: e.target.value })} />
-                            <br />
-
-                            <textarea
-                                name="comentario"
-                                value={comentarios.comentario}
-                                cols="30"
-                                rows="7"
-                                placeholder='Que piensas de esta pelicula'
-                                onChange={e => setComentarios({ ...comentarios, [e.target.name]: e.target.value })}></textarea>
-                            <br />
-                            <button>Comentar</button>
-                        </form>
-                    </FormularioComentarios>
-
-                    { comentariosDb.length !== 0 &&
-
-                        <ContenedorComentarios>
-                            {comentariosDb.map(comentario => (
-                                <div className='comentario'>
-                                    <div className='imagen-nombre'>
-                                        <img src={imagenUsuario} alt={imagenUsuario} />
-                                        <h3>{comentario.nombreUsuario}</h3>
-                                    </div>
-                                    <div className='contenido-comentario'>
-                                        <h4>{comentario.comentario}</h4>
-                                        <p>Publicado hace: {formatDistanceToNow(new Date(comentario.creado), { locale: es })}</p>
-                                    </div>
-
-                                </div>
-                            ))}
-
-
-                        </ContenedorComentarios>
-                    }
-
-                </>
-
-            }
-
-
-
-
+          {comentariosDb.length !== 0 && (
+            <ContenedorComentarios>
+              {comentariosDb.map((comentario) => (
+                <div className="comentario">
+                  <div className="imagen-nombre">
+                    <img src={imagenUsuario} alt={imagenUsuario} />
+                    <h3>{comentario.nombreUsuario}</h3>
+                  </div>
+                  <div className="contenido-comentario">
+                    <h4>{comentario.comentario}</h4>
+                    <p>
+                      Publicado hace:{" "}
+                      {formatDistanceToNow(new Date(comentario.creado), {
+                        locale: es,
+                      })}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </ContenedorComentarios>
+          )}
         </>
-    );
-}
+      )}
+    </>
+  );
+};
 
 export default VerSerie;

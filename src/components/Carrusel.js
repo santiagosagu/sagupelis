@@ -51,24 +51,26 @@ const Carrusel = ({ catalogo }) => {
     <>
       <Contenedor>
         <ContenedorCarrusel>
-          <Carousel
-            autoPlay
-            infiniteLoop
-            centerSlidePercentage={10}
-            width="100%"
-            thumbWidth={30}
-            dynamicHeight
-            emulateTouch
-            showThumbs={false}
-            renderIndicator={false}
-            showStatus={false}
-          >
-            {catalogo.map((pelicula) => (
-              <div>
-                <Img src={pelicula.imagen} alt={pelicula.nombre} />
-              </div>
-            ))}
-          </Carousel>
+          {catalogo.length > 0 && (
+            <Carousel
+              autoPlay
+              infiniteLoop
+              centerSlidePercentage={10}
+              width="100%"
+              thumbWidth={30}
+              dynamicHeight
+              emulateTouch
+              showThumbs={false}
+              renderIndicator={false}
+              showStatus={false}
+            >
+              {catalogo.map((pelicula) => (
+                <div>
+                  <Img src={pelicula.imagen} alt={pelicula.nombre} />
+                </div>
+              ))}
+            </Carousel>
+          )}
         </ContenedorCarrusel>
       </Contenedor>
     </>

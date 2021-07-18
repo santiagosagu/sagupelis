@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/iframe-has-title */
 import React, { useState, useEffect } from "react";
 import UseInformacionPeliculas from "../hooks/useInformacionPeliculas";
 import Styled from "@emotion/styled";
@@ -210,9 +211,31 @@ const FormularioComentarios = Styled.div`
 `;
 
 const VerPelicula = ({ match, history }) => {
-  const [datosPelicula, guardarDatosPelicula] = useState(null);
+  const [datosPelicula, guardarDatosPelicula] = useState({});
+  const [peliculas, setPeliculas] = useState([]);
 
-  const { peliculas } = UseInformacionPeliculas();
+  // const { peliculas } = UseInformacionPeliculas();
+
+  // traer todos las peliculas
+  useEffect(() => {
+    const obtenerProductos = () => {
+      db.collection("peliculas")
+        .orderBy("id", "desc")
+        .onSnapshot(manejarSnapshot);
+    };
+
+    obtenerProductos();
+
+    function manejarSnapshot(snapshot) {
+      const resultado = snapshot.docs.map((doc) => {
+        return {
+          ids: doc.id,
+          ...doc.data(),
+        };
+      });
+      setPeliculas(resultado);
+    }
+  }, []);
 
   const [comentarios, setComentarios] = useState({
     nombre: "",
@@ -239,7 +262,11 @@ const VerPelicula = ({ match, history }) => {
 
   /* verifica los comentarios  */
   useEffect(() => {
-    if (comentariosDbTodos.length > 0) {
+    if (
+      comentariosDbTodos.length > 0 &&
+      peliculas.length > 0 &&
+      datosPelicula.length !== 0
+    ) {
       const resultado = comentariosDbTodos.filter(
         (dato) => dato.nombre === datosPelicula[0].nombre
       );
@@ -251,7 +278,11 @@ const VerPelicula = ({ match, history }) => {
 
   /* verificar me gusta */
   useEffect(() => {
-    if (votosGusta.length > 0) {
+    if (
+      votosGusta.length > 0 &&
+      peliculas.length > 0 &&
+      datosPelicula.length !== 0
+    ) {
       const resultado = votosGusta.filter(
         (dato) => dato.nombre === datosPelicula[0].nombre
       );
@@ -262,7 +293,11 @@ const VerPelicula = ({ match, history }) => {
 
   /* verificar no me gusta */
   useEffect(() => {
-    if (votosNoGusta.length > 0) {
+    if (
+      votosNoGusta.length > 0 &&
+      peliculas.length > 0 &&
+      datosPelicula.length !== 0
+    ) {
       const resultado = votosNoGusta.filter(
         (dato) => dato.nombre === datosPelicula[0].nombre
       );
@@ -331,7 +366,7 @@ const VerPelicula = ({ match, history }) => {
   }, [consultarDb]);
 
   useEffect(() => {
-    if (peliculas.length > 0 && datosPelicula !== null) {
+    if (peliculas.length > 0 && datosPelicula.length !== 0) {
       const resultado = peliculas.filter(
         (pelicula) => pelicula.nombre === datosPelicula[0].nombre
       );
@@ -352,10 +387,12 @@ const VerPelicula = ({ match, history }) => {
       );
 
       guardarDatosPelicula(prueba);
+
+      console.log(prueba);
     };
 
     revisarPelicula();
-  }, []);
+  }, [peliculas, match.params]);
 
   const volverSeleccion = () => {
     history.push("/");
@@ -455,7 +492,7 @@ const VerPelicula = ({ match, history }) => {
 
   return (
     <>
-      {datosPelicula && (
+      {datosPelicula.length !== 0 && peliculas.length !== 0 && (
         <>
           <CardFlex>
             <img src={datosPelicula[0].imagen} alt="" />
