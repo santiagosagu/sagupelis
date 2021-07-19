@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import Styled from '@emotion/styled'
-import useInformacionSeries from '../hooks/useInformacionSeries'
-
-
+import React, { useState, useEffect } from "react";
+import Styled from "@emotion/styled";
+import useInformacionSeries from "../hooks/useInformacionSeries";
+import { db } from "../firebaseConfig";
 
 const Titulo = Styled.h2`
     margin: 2rem;
@@ -10,7 +9,7 @@ const Titulo = Styled.h2`
     @media (min-width: 768px) {
         margin: 2rem 8rem;
     }
-`
+`;
 
 const Contenedor = Styled.div`
 
@@ -37,7 +36,7 @@ const Contenedor = Styled.div`
         grid-gap: 6rem;
     }
 
-`
+`;
 
 const Card = Styled.div`
     margin-right: 1.5rem;
@@ -49,7 +48,7 @@ const Card = Styled.div`
             cursor: pointer;
         }
     }
-`
+`;
 
 const CardImage = Styled.div`
     width: 15rem;
@@ -78,74 +77,77 @@ const CardImage = Styled.div`
         background-color:#fff;
         margin-bottom: 5rem;
     }
-`
+`;
 
 const Series = ({ history }) => {
+  const [series, setSeries] = useState([]);
+  const [datosPelicula, guardarDatosPelicula] = useState({});
+  const [datosSerie, guardarDatosSerie] = useState({});
 
-    const [datosPelicula, guardarDatosPelicula] = useState({})
-    const [datosSerie, guardarDatosSerie] = useState({})
+  const [verPelicula, guardarVerPelicula] = useState(false);
+  const [verSerie, guardarVerSerie] = useState(false);
 
-    const [verPelicula, guardarVerPelicula] = useState(false)
-    const [verSerie, guardarVerSerie] = useState(false)
+  //   const { series } = useInformacionSeries();
 
-    const { series } = useInformacionSeries()
+  // traer todas las series
+  useEffect(() => {
+    const obtenerProductos = () => {
+      db.collection("series").orderBy("id", "desc").onSnapshot(manejarSnapshot);
+    };
 
-    useEffect(() => {
-        const verificarDatos = () => {
+    obtenerProductos();
 
-            if (!datosSerie) {
-
-                guardarDatosSerie(false)
-            }
-        }
-
-        verificarDatos()
-
-    }, [datosPelicula])
-
-
-    const serieSeleccionada = serie => {
-
-        guardarDatosPelicula({})
-        guardarDatosSerie(serie)
-
-        guardarVerPelicula(false)
-        guardarVerSerie(true)
-
-        history.push(`/ver-serie/${serie.nombre}/${serie.id}`)
-
+    function manejarSnapshot(snapshot) {
+      const resultado = snapshot.docs.map((doc) => {
+        return {
+          ids: doc.id,
+          ...doc.data(),
+        };
+      });
+      setSeries(resultado);
     }
+  }, []);
 
-    return (
+  useEffect(() => {
+    const verificarDatos = () => {
+      if (!datosSerie) {
+        guardarDatosSerie(false);
+      }
+    };
+
+    verificarDatos();
+  }, [datosPelicula]);
+
+  const serieSeleccionada = (serie) => {
+    guardarDatosPelicula({});
+    guardarDatosSerie(serie);
+
+    guardarVerPelicula(false);
+    guardarVerSerie(true);
+
+    history.push(`/ver-serie/${serie.nombre}/${serie.id}`);
+  };
+
+  return (
+    <>
+      {!verPelicula && !verSerie && series.length !== 0 ? (
         <>
-            { !verPelicula && !verSerie
+          <Titulo>Todas las Series</Titulo>
 
-                ?
-                <>
-                    <Titulo>Todas las Series</Titulo>
-
-                    <Contenedor>
-                            {
-                                series.map(serie =>
-                                    <Card onClick={() => serieSeleccionada(serie)}>
-                                        <CardImage >
-                                            <img src={serie.imagen} alt={serie.nombre} />
-                                        </CardImage>
-                                        <h3>{serie.nombre}</h3>
-
-                                    </Card>
-                                )
-                            }
-                        </Contenedor>
-                </>
-
-                : null
-
-            }
-
+          <Contenedor>
+            {series.map((serie) => (
+              <Card onClick={() => serieSeleccionada(serie)}>
+                <CardImage>
+                  <img src={serie.imagen} alt={serie.nombre} />
+                </CardImage>
+                <h3>{serie.nombre}</h3>
+              </Card>
+            ))}
+          </Contenedor>
         </>
-
-    );
-}
+      ) : null}
+    </>
+  );
+};
 
 export default Series;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Styled from "@emotion/styled";
 import useInformacionPeliculas from "../hooks/useInformacionPeliculas";
+import { db } from "../firebaseConfig";
 
 const Titulo = Styled.h2`
     margin: 2rem;
@@ -82,13 +83,35 @@ const CardImage = Styled.div`
 `;
 
 const Peliculas = ({ history }) => {
+  const [peliculas, setPeliculas] = useState([]);
   const [datosPelicula, guardarDatosPelicula] = useState({});
   const [datosSerie, guardarDatosSerie] = useState({});
 
   const [verPelicula, guardarVerPelicula] = useState(false);
   const [verSerie, guardarVerSerie] = useState(false);
 
-  const { peliculas } = useInformacionPeliculas();
+  // const { peliculas } = useInformacionPeliculas();
+
+  // traer todos las peliculas
+  useEffect(() => {
+    const obtenerProductos = () => {
+      db.collection("peliculas")
+        .orderBy("id", "desc")
+        .onSnapshot(manejarSnapshot);
+    };
+
+    obtenerProductos();
+
+    function manejarSnapshot(snapshot) {
+      const resultado = snapshot.docs.map((doc) => {
+        return {
+          ids: doc.id,
+          ...doc.data(),
+        };
+      });
+      setPeliculas(resultado);
+    }
+  }, []);
 
   useEffect(() => {
     const verificarDatos = () => {
@@ -128,7 +151,7 @@ const Peliculas = ({ history }) => {
 
   return (
     <>
-      {!verPelicula && !verSerie ? (
+      {!verPelicula && !verSerie && peliculas.length !== 0 ? (
         <>
           <Titulo>Todas las Peliculas</Titulo>
 
