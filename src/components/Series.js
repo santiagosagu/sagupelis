@@ -116,7 +116,7 @@ const Series = ({ history }) => {
     };
 
     verificarDatos();
-  }, [datosPelicula]);
+  }, [datosPelicula, datosSerie]);
 
   const serieSeleccionada = (serie) => {
     guardarDatosPelicula({});

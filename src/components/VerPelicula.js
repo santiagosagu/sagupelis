@@ -19,10 +19,10 @@ const CardFlex = Styled.div`
     }
 
     @media (min-width: 768px) {
-        display: flex;
+        display: grid;
+        grid-template-columns: 40% 60%;
         margin: 1rem 4rem;
         padding: 1rem;
-
         img{
         width: 100%;
         height: 600px;
@@ -495,7 +495,9 @@ const VerPelicula = ({ match, history }) => {
       {datosPelicula.length !== 0 && peliculas.length !== 0 && (
         <>
           <CardFlex>
-            <img src={datosPelicula[0].imagen} alt="" />
+            <div className="contenedorImagen">
+              <img src={datosPelicula[0].imagen} alt="" />
+            </div>
             <CardFlexContenido>
               <h2>{datosPelicula[0].nombre}</h2>
               <h4>
