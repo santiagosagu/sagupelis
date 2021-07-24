@@ -42,7 +42,12 @@ const Contenedor = Styled.div`
 const Card = Styled.div`
     
     h3{
+        font-size: 2rem;
         margin: 0 1rem 0 0;
+        @media(min-width: 768px){
+          font-size: 2.5rem;
+          margin-bottom: 2rem;
+        }
     }
 
     @media (min-width: 768px) {
@@ -65,7 +70,7 @@ const CardImage = Styled.div`
 
     img {
         width: 100%;
-        height: auto;
+        height: inherit;
         
     }
 
@@ -80,7 +85,7 @@ const CardImage = Styled.div`
         width: 22rem;
         height: 30rem;
         background-color:#fff;
-        margin-bottom: 5rem;
+       
     }
 `;
 
@@ -582,7 +587,7 @@ const Inicio = ({ history }) => {
             <h1>Loading</h1>
           )}
 
-          <section>
+          <section style={{ marginTop: "6.5rem" }}>
             <TituloSeccion>Peliculas</TituloSeccion>
 
             <Contenedor>
@@ -597,7 +602,7 @@ const Inicio = ({ history }) => {
             </Contenedor>
           </section>
 
-          <section>
+          <section style={{ marginTop: "6.5rem" }}>
             <TituloSeccion>Series</TituloSeccion>
 
             <Contenedor>
@@ -612,7 +617,7 @@ const Inicio = ({ history }) => {
             </Contenedor>
           </section>
 
-          <section>
+          <section style={{ marginTop: "6.5rem" }}>
             <TituloSeccion>Peliculas mejor Valoradas</TituloSeccion>
 
             <Contenedor>
@@ -643,7 +648,7 @@ const Inicio = ({ history }) => {
             </Contenedor>
           </section>
 
-          <section>
+          <section style={{ marginTop: "6.5rem" }}>
             <TituloSeccion>Series mejor Valoradas</TituloSeccion>
 
             <Contenedor>
