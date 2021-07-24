@@ -390,16 +390,8 @@ const Inicio = ({ history }) => {
 
   const [peliculasDBCatalogo, setPeliculasDBCatalogo] = useState({});
 
-  const [peliculaNueva] = useState({
-    id: 132,
-    imagen:
-      "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/uHDF2320SbWDTP1FMZ8LgEIHew2.jpg",
-    nombre: "Space Jam Nuevas leyendas (2021)",
-    descripcion:
-      "Secuela de la cinta original de 1996, Space Jam, protagonizada por Michael Jordan. En esta segunda parte, la super estrella de la NBA es LeBron James, quien queda atrapado junto a su hijo Dom en un extraño lugar, un espacio digital de una fuerza todopoderosa y malvada conocida como A.I. Para volver a casa y poner a salvo a su hijo, el jugador de baloncesto deberá unir fuerzas con Bugs Bunny, Lola Bunny y el resto de personajes de los Looney Tunes para enfrentarse en un partido de baloncesto a los campeones digitalizados por A.I.",
-    categoria: "Animacion, Comedia, Familia, Ciencia ficcion",
-    url: "https://streamtape.com/e/9kqpWaYx01faWdk",
-  });
+  const [votosGustaPeliculas, setVotosGustaPeliculas] = useState([]);
+  const [votosGustaSeries, setVotosGustaSeries] = useState([]);
 
   const peliculaSeleccionada = (pelicula) => {
     guardarDatosPelicula(pelicula);
@@ -483,6 +475,48 @@ const Inicio = ({ history }) => {
     }
   }, []);
 
+  //traer todos los votos me gusta peliculas
+  useEffect(() => {
+    const obtenerProductos = () => {
+      db.collection("votosGustaPeliculas")
+        .orderBy("votos", "desc")
+        .onSnapshot(manejarSnapshot);
+    };
+
+    obtenerProductos();
+
+    function manejarSnapshot(snapshot) {
+      const resultado = snapshot.docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      });
+      setVotosGustaPeliculas(resultado);
+    }
+  }, []);
+
+  //traer todos los votos me gusta series
+  useEffect(() => {
+    const obtenerProductos = () => {
+      db.collection("votosGustaSeries")
+        .orderBy("votos", "desc")
+        .onSnapshot(manejarSnapshot);
+    };
+
+    obtenerProductos();
+
+    function manejarSnapshot(snapshot) {
+      const resultado = snapshot.docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      });
+      setVotosGustaSeries(resultado);
+    }
+  }, []);
+
   // useEffect(() => {
   //   const guardarPeliculas = async () => {
   //     await peliculas.map((item) => {
@@ -518,6 +552,25 @@ const Inicio = ({ history }) => {
   //     guardarPeli();
   //   }
   // }, [peliculasDB, peliculaNueva]);
+
+  // const MasVotadasFn = () => {
+  //   votosGusta.map((peli) => {
+  //     const resultado = peliculasDB.filter(
+  //       (item) => item.nombre === peli.nombre
+  //     );
+
+  //     if (resultado.length > 0) {
+  //       return (
+  //         <Card onClick={() => peliculaSeleccionada(resultado)}>
+  //           <CardImage>
+  //             <img src={resultado.imagen} alt={resultado.nombre} />
+  //           </CardImage>
+  //           <h3>{resultado.nombre}</h3>
+  //         </Card>
+  //       );
+  //     }
+  //   });
+  // };
 
   return (
     <>
@@ -556,6 +609,66 @@ const Inicio = ({ history }) => {
                   <h3>{serie.nombre}</h3>
                 </Card>
               ))}
+            </Contenedor>
+          </section>
+
+          <section>
+            <TituloSeccion>Peliculas mejor Valoradas</TituloSeccion>
+
+            <Contenedor>
+              {votosGustaPeliculas.length > 0 && peliculasDB.length > 0 && (
+                <>
+                  {votosGustaPeliculas.map((peli) => {
+                    const resultado = peliculasDB.filter(
+                      (item) => item.nombre === peli.nombre
+                    );
+
+                    if (resultado.length > 0)
+                      return (
+                        <Card
+                          onClick={() => peliculaSeleccionada(resultado[0])}
+                        >
+                          <CardImage>
+                            <img
+                              src={resultado[0].imagen}
+                              alt={resultado[0].nombre}
+                            />
+                          </CardImage>
+                          <h3>{resultado[0].nombre}</h3>
+                        </Card>
+                      );
+                  })}
+                </>
+              )}
+            </Contenedor>
+          </section>
+
+          <section>
+            <TituloSeccion>Series mejor Valoradas</TituloSeccion>
+
+            <Contenedor>
+              {votosGustaSeries.length > 0 && seriesDB.length > 0 && (
+                <>
+                  {votosGustaSeries.map((peli) => {
+                    const resultado = seriesDB.filter(
+                      (item) => item.nombre === peli.nombre
+                    );
+
+                    if (resultado.length > 0)
+                      return (
+                        <Card onClick={() => serieSeleccionada(resultado[0])}>
+                          <CardImage>
+                            <img
+                              src={resultado[0].imagen}
+                              alt={resultado[0].nombre}
+                            />
+                          </CardImage>
+                          <h3>{resultado[0].nombre}</h3>
+                        </Card>
+                      );
+                  })}
+                </>
+              )}
             </Contenedor>
           </section>
         </>

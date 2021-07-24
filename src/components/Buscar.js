@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import Styled from '@emotion/styled'
-import useInformacionSeries from '../hooks/useInformacionSeries'
-import useInformacionPeliculas from '../hooks/useInformacionPeliculas'
-import VerPelicula from './VerPelicula'
-import VerSerie from './VerSerie'
+import React, { useState, useEffect } from "react";
+import Styled from "@emotion/styled";
+import useInformacionSeries from "../hooks/useInformacionSeries";
+import useInformacionPeliculas from "../hooks/useInformacionPeliculas";
+import VerPelicula from "./VerPelicula";
+import VerSerie from "./VerSerie";
+import { db } from "../firebaseConfig";
 
 const Contenedor = Styled.div`
     margin: 4rem 1rem;
@@ -13,7 +14,7 @@ const Contenedor = Styled.div`
     @media ( min-width: 768px ) {
         margin: 4rem;
     }
-`
+`;
 
 const Campo = Styled.input`
     background-color:  rgb(19, 18, 18);
@@ -28,7 +29,7 @@ const Campo = Styled.input`
         width: 60rem;
         font-size: 2rem;
     }
-`
+`;
 
 const Boton = Styled.input`
     color: #fff;
@@ -55,7 +56,7 @@ const Boton = Styled.input`
             background-color: #53556a;
         }
     }
-`
+`;
 
 const Resultado = Styled.div`
 
@@ -66,7 +67,7 @@ const Resultado = Styled.div`
         margin: 2rem 4rem;
         text-transform: capitalize;
     }
-`
+`;
 
 const ContenedorResultado = Styled.div`
 
@@ -95,7 +96,7 @@ const ContenedorResultado = Styled.div`
     
 
 
-`
+`;
 
 const Card = Styled.div`
     margin-right: 1.5rem;
@@ -107,7 +108,7 @@ const Card = Styled.div`
             cursor: pointer;
         }
     }
-`
+`;
 
 const CardImage = Styled.div`
     width: 15rem;
@@ -129,198 +130,209 @@ const CardImage = Styled.div`
         background-color:#fff;
         margin-bottom: 5rem;
     }
-`
+`;
 
 const Buscar = ({ history }) => {
+  const [datosPelicula, guardarDatosPelicula] = useState({});
+  const [datosSerie, guardarDatosSerie] = useState({});
 
-    const [datosPelicula, guardarDatosPelicula] = useState({})
-    const [datosSerie, guardarDatosSerie] = useState({})
+  const [verPelicula, guardarVerPelicula] = useState(false);
+  const [verSerie, guardarVerSerie] = useState(false);
 
-    const [verPelicula, guardarVerPelicula] = useState(false)
-    const [verSerie, guardarVerSerie] = useState(false)
+  const [busquedatexto, guardarBusquedaTexto] = useState({
+    busqueda: "",
+  });
 
-    const [busquedatexto, guardarBusquedaTexto] = useState({
-        busqueda: ''
-    })
+  const [resultadoBusquedaPelicula, guardarResultadoBusquedaPelicula] =
+    useState([]);
+  const [resultadoBusquedaSerie, guardarResultadoBusquedaSerie] = useState([]);
+  const [peliculasDB, setPeliculasDB] = useState([]);
+  const [seriesDB, setSeriesDB] = useState([]);
 
-    const [resultadoBusquedaPelicula, guardarResultadoBusquedaPelicula] = useState([])
-    const [resultadoBusquedaSerie, guardarResultadoBusquedaSerie] = useState([])
+  const { series } = useInformacionSeries();
 
-    const { peliculas } = useInformacionPeliculas()
-    const { series } = useInformacionSeries()
+  // traer todos las peliculas
+  useEffect(() => {
+    const obtenerProductos = () => {
+      db.collection("peliculas")
+        .orderBy("id", "desc")
+        .onSnapshot(manejarSnapshot);
+    };
 
-    useEffect(() => {
-        const buscador = () => {
-            const busqueda = busquedatexto.busqueda.toLocaleLowerCase()
+    obtenerProductos();
 
-            if (busquedatexto.busqueda.length > 0) {
-                const filtro = peliculas.filter(pelicula => {
-                    return (
-                        pelicula.nombre.toLowerCase().includes(busqueda) ||
-                        /* pelicula.descripcion.toLowerCase().includes(busqueda) || */
-                        pelicula.categoria.toLowerCase().includes(busqueda)
-                    )
-                })
+    function manejarSnapshot(snapshot) {
+      const resultado = snapshot.docs.map((doc) => {
+        return {
+          ids: doc.id,
+          ...doc.data(),
+        };
+      });
+      setPeliculasDB(resultado);
+    }
+  }, []);
 
-                guardarResultadoBusquedaPelicula(filtro)
-            } else {
-                guardarResultadoBusquedaPelicula({})
-            }
+  // traer todas las series
+  useEffect(() => {
+    const obtenerProductos = () => {
+      db.collection("series").orderBy("id", "desc").onSnapshot(manejarSnapshot);
+    };
 
-            if (busquedatexto.busqueda.length > 0) {
-                const filtro = series.filter(serie => {
-                    return (
-                        serie.nombre.toLowerCase().includes(busqueda) ||
-                        /* serie.descripcion.toLowerCase().includes(busqueda) || */
-                        serie.categoria.toLowerCase().includes(busqueda)
-                    )
-                })
+    obtenerProductos();
 
-                guardarResultadoBusquedaSerie(filtro)
-            } else {
-                guardarResultadoBusquedaSerie({})
-            }
+    function manejarSnapshot(snapshot) {
+      const resultado = snapshot.docs.map((doc) => {
+        return {
+          ids: doc.id,
+          ...doc.data(),
+        };
+      });
+      setSeriesDB(resultado);
+    }
+  }, []);
 
+  useEffect(() => {
+    const buscador = () => {
+      const busqueda = busquedatexto.busqueda.toLocaleLowerCase();
 
+      if (busquedatexto.busqueda.length > 0) {
+        const filtro = peliculasDB.filter((pelicula) => {
+          return (
+            pelicula.nombre.toLowerCase().includes(busqueda) ||
+            /* pelicula.descripcion.toLowerCase().includes(busqueda) || */
+            pelicula.categoria.toLowerCase().includes(busqueda)
+          );
+        });
 
-        }
+        guardarResultadoBusquedaPelicula(filtro);
+      } else {
+        guardarResultadoBusquedaPelicula({});
+      }
 
-        buscador()
-    }, [busquedatexto])
+      if (busquedatexto.busqueda.length > 0) {
+        const filtro = seriesDB.filter((serie) => {
+          return (
+            serie.nombre.toLowerCase().includes(busqueda) ||
+            /* serie.descripcion.toLowerCase().includes(busqueda) || */
+            serie.categoria.toLowerCase().includes(busqueda)
+          );
+        });
 
-    const realizarBusqueda = (e) => {
-        e.preventDefault()
+        guardarResultadoBusquedaSerie(filtro);
+      } else {
+        guardarResultadoBusquedaSerie({});
+      }
+    };
+
+    buscador();
+  }, [busquedatexto]);
+
+  const realizarBusqueda = (e) => {
+    e.preventDefault();
+  };
+
+  const peliculaSeleccionada = (pelicula) => {
+    guardarDatosPelicula(pelicula);
+    guardarDatosSerie({});
+
+    guardarVerPelicula(true);
+    guardarVerSerie(false);
+
+    history.push(`/ver-pelicula/${pelicula.nombre}/${pelicula.id}`);
+  };
+
+  const serieSeleccionada = (serie) => {
+    guardarDatosPelicula({});
+    guardarDatosSerie(serie);
+
+    guardarVerPelicula(false);
+    guardarVerSerie(true);
+
+    history.push(`/ver-serie/${serie.nombre}/${serie.id}`);
+  };
+
+  const queMostrar = () => {
+    if (verPelicula || datosPelicula.length > 0) {
+      return (
+        <VerPelicula
+          datosPelicula={datosPelicula}
+          guardarDatosPelicula={guardarDatosPelicula}
+          guardarVerPelicula={guardarVerPelicula}
+        />
+      );
     }
 
-    const peliculaSeleccionada = pelicula => {
-
-        guardarDatosPelicula(pelicula)
-        guardarDatosSerie({})
-
-        guardarVerPelicula(true)
-        guardarVerSerie(false)
-
-
-        history.push(`/ver-pelicula/${pelicula.nombre}/${pelicula.id}`)
-
+    if (verSerie || datosSerie.length > 0) {
+      return (
+        <VerSerie
+          datosSerie={datosSerie}
+          guardarDatosSerie={guardarDatosSerie}
+          guardarVerSerie={guardarVerSerie}
+        />
+      );
     }
+  };
 
-    const serieSeleccionada = serie => {
+  return (
+    <>
+      {!verPelicula && !verSerie ? (
+        <div>
+          <Contenedor>
+            <form onSubmit={realizarBusqueda}>
+              <Campo
+                type="text"
+                name="busqueda"
+                placeholder="Escribe el Nombre, Categoria o Año que buscas"
+                onChange={(e) =>
+                  guardarBusquedaTexto({ [e.target.name]: e.target.value })
+                }
+              />
+              <br />
+              {/* <Boton type="submit" value="Buscar" /> */}
+            </form>
+          </Contenedor>
 
-        guardarDatosPelicula({})
-        guardarDatosSerie(serie)
+          {/* contenedor resultado peliculas */}
 
-        guardarVerPelicula(false)
-        guardarVerSerie(true)
+          {resultadoBusquedaPelicula.length > 0 ? (
+            <Resultado>
+              <h2>Resultado Peliculas</h2>
+              <ContenedorResultado>
+                {resultadoBusquedaPelicula.map((pelicula) => (
+                  <Card onClick={() => peliculaSeleccionada(pelicula)}>
+                    <CardImage>
+                      <img src={pelicula.imagen} alt={pelicula.nombre} />
+                    </CardImage>
+                    <h3>{pelicula.nombre}</h3>
+                  </Card>
+                ))}
+              </ContenedorResultado>
+            </Resultado>
+          ) : null}
 
-        history.push(`/ver-serie/${serie.nombre}/${serie.id}`)
+          {/* contenedor resultado series */}
 
-    }
-
-    const queMostrar = () => {
-        if (verPelicula || datosPelicula.length > 0) {
-            return (
-                <VerPelicula
-                    datosPelicula={datosPelicula}
-                    guardarDatosPelicula={guardarDatosPelicula}
-                    guardarVerPelicula={guardarVerPelicula}
-                />
-            )
-        }
-
-        if (verSerie || datosSerie.length > 0) {
-            return (
-                <VerSerie
-                    datosSerie={datosSerie}
-                    guardarDatosSerie={guardarDatosSerie}
-                    guardarVerSerie={guardarVerSerie}
-                />
-            )
-        }
-    }
-
-    return (
-        <>
-            { !verPelicula && !verSerie
-                ? <div>
-                    <Contenedor>
-                        <form
-                            onSubmit={realizarBusqueda}
-                        >
-                            <Campo
-                                type="text"
-                                name="busqueda"
-                                placeholder="Escribe el Nombre, Categoria o Año que buscas"
-                                onChange={e => guardarBusquedaTexto({ [e.target.name]: e.target.value })}
-                            />
-                            <br />
-                            {/* <Boton type="submit" value="Buscar" /> */}
-                        </form>
-                    </Contenedor>
-
-                    {/* contenedor resultado peliculas */}
-
-                    {resultadoBusquedaPelicula.length > 0
-
-                        ? <Resultado>
-                            <h2>Resultado Peliculas</h2>
-                            <ContenedorResultado>
-
-                                {
-                                    resultadoBusquedaPelicula.map(pelicula =>
-                                        <Card onClick={() => peliculaSeleccionada(pelicula)}>
-                                            <CardImage >
-                                                <img src={pelicula.imagen} alt={pelicula.nombre} />
-                                            </CardImage>
-                                            <h3>{pelicula.nombre}</h3>
-
-                                        </Card>
-                                    )
-                                }
-                            </ContenedorResultado>
-                        </Resultado>
-                        : null
-
-                    }
-
-
-                    {/* contenedor resultado series */}
-
-                    {resultadoBusquedaSerie.length > 0
-
-                        ? <Resultado>
-                            <h2>Resultado Series</h2>
-                            <ContenedorResultado>
-                                {
-                                    resultadoBusquedaSerie.map(serie =>
-                                        <Card onClick={() => serieSeleccionada(serie)}>
-                                            <CardImage >
-                                                <img src={serie.imagen} alt={serie.nombre} />
-                                            </CardImage>
-                                            <h3>{serie.nombre}</h3>
-
-                                        </Card>
-                                    )
-                                }
-                            </ContenedorResultado>
-
-                        </Resultado>
-                        : null
-
-                    }
-                </div>
-
-                    : queMostrar()
-            }
-
-
-
-
-
-
-        </>
-    );
-}
+          {resultadoBusquedaSerie.length > 0 ? (
+            <Resultado>
+              <h2>Resultado Series</h2>
+              <ContenedorResultado>
+                {resultadoBusquedaSerie.map((serie) => (
+                  <Card onClick={() => serieSeleccionada(serie)}>
+                    <CardImage>
+                      <img src={serie.imagen} alt={serie.nombre} />
+                    </CardImage>
+                    <h3>{serie.nombre}</h3>
+                  </Card>
+                ))}
+              </ContenedorResultado>
+            </Resultado>
+          ) : null}
+        </div>
+      ) : (
+        queMostrar()
+      )}
+    </>
+  );
+};
 
 export default Buscar;
-
