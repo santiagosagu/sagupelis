@@ -146,8 +146,13 @@ const Buscar = ({ history }) => {
   const [resultadoBusquedaPelicula, guardarResultadoBusquedaPelicula] =
     useState([]);
   const [resultadoBusquedaSerie, guardarResultadoBusquedaSerie] = useState([]);
+  const [resultadoBusquedaAnimes, guardarResultadoBusquedaAnimes] = useState(
+    []
+  );
+
   const [peliculasDB, setPeliculasDB] = useState([]);
   const [seriesDB, setSeriesDB] = useState([]);
+  const [animesDB, setAnimesDB] = useState([]);
 
   const { series } = useInformacionSeries();
 
@@ -191,6 +196,25 @@ const Buscar = ({ history }) => {
     }
   }, []);
 
+  // traer todos los animes
+  useEffect(() => {
+    const obtenerProductos = () => {
+      db.collection("anime").orderBy("id", "desc").onSnapshot(manejarSnapshot);
+    };
+
+    obtenerProductos();
+
+    function manejarSnapshot(snapshot) {
+      const resultado = snapshot.docs.map((doc) => {
+        return {
+          ids: doc.id,
+          ...doc.data(),
+        };
+      });
+      setAnimesDB(resultado);
+    }
+  }, []);
+
   useEffect(() => {
     const buscador = () => {
       const busqueda = busquedatexto.busqueda.toLocaleLowerCase();
@@ -222,6 +246,20 @@ const Buscar = ({ history }) => {
       } else {
         guardarResultadoBusquedaSerie({});
       }
+
+      if (busquedatexto.busqueda.length > 0) {
+        const filtro = animesDB.filter((serie) => {
+          return (
+            serie.nombre.toLowerCase().includes(busqueda) ||
+            /* serie.descripcion.toLowerCase().includes(busqueda) || */
+            serie.categoria.toLowerCase().includes(busqueda)
+          );
+        });
+
+        guardarResultadoBusquedaAnimes(filtro);
+      } else {
+        guardarResultadoBusquedaAnimes({});
+      }
     };
 
     buscador();
@@ -249,6 +287,10 @@ const Buscar = ({ history }) => {
     guardarVerSerie(true);
 
     history.push(`/ver-serie/${serie.nombre}/${serie.id}`);
+  };
+
+  const animeSeleccionado = (serie) => {
+    history.push(`/ver-anime/${serie.nombre}/${serie.id}`);
   };
 
   const queMostrar = () => {
@@ -318,6 +360,24 @@ const Buscar = ({ history }) => {
               <ContenedorResultado>
                 {resultadoBusquedaSerie.map((serie) => (
                   <Card onClick={() => serieSeleccionada(serie)}>
+                    <CardImage>
+                      <img src={serie.imagen} alt={serie.nombre} />
+                    </CardImage>
+                    <h3>{serie.nombre}</h3>
+                  </Card>
+                ))}
+              </ContenedorResultado>
+            </Resultado>
+          ) : null}
+
+          {/* contenedor resultado series */}
+
+          {resultadoBusquedaAnimes.length > 0 ? (
+            <Resultado>
+              <h2>Resultado Animes</h2>
+              <ContenedorResultado>
+                {resultadoBusquedaAnimes.map((serie) => (
+                  <Card onClick={() => animeSeleccionado(serie)}>
                     <CardImage>
                       <img src={serie.imagen} alt={serie.nombre} />
                     </CardImage>

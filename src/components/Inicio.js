@@ -392,6 +392,7 @@ const Inicio = ({ history }) => {
 
   const [peliculasDB, setPeliculasDB] = useState([]);
   const [seriesDB, setSeriesDB] = useState([]);
+  const [animesDB, setAnimesDB] = useState([]);
 
   const [peliculasDBCatalogo, setPeliculasDBCatalogo] = useState({});
 
@@ -416,6 +417,16 @@ const Inicio = ({ history }) => {
     guardarVerSerie(true);
 
     history.push(`/ver-serie/${serie.nombre}/${serie.id}`);
+  };
+
+  const animeSeleccionado = (serie) => {
+    // guardarDatosPelicula({});
+    // guardarDatosSerie(serie);
+
+    // guardarVerPelicula(false);
+    // guardarVerSerie(true);
+
+    history.push(`/ver-anime/${serie.nombre}/${serie.id}`);
   };
 
   // traer todos las peliculas
@@ -477,6 +488,24 @@ const Inicio = ({ history }) => {
         };
       });
       setSeriesDB(resultado);
+    }
+  }, []);
+
+  useEffect(() => {
+    const obtenerProductos = () => {
+      db.collection("anime").orderBy("id", "desc").onSnapshot(manejarSnapshot);
+    };
+
+    obtenerProductos();
+
+    function manejarSnapshot(snapshot) {
+      const resultado = snapshot.docs.map((doc) => {
+        return {
+          ids: doc.id,
+          ...doc.data(),
+        };
+      });
+      setAnimesDB(resultado);
     }
   }, []);
 
@@ -608,6 +637,21 @@ const Inicio = ({ history }) => {
             <Contenedor>
               {seriesDB.map((serie) => (
                 <Card onClick={() => serieSeleccionada(serie)}>
+                  <CardImage>
+                    <img src={serie.imagen} alt={serie.nombre} />
+                  </CardImage>
+                  <h3>{serie.nombre}</h3>
+                </Card>
+              ))}
+            </Contenedor>
+          </section>
+
+          <section style={{ marginTop: "6.5rem" }}>
+            <TituloSeccion>Animes</TituloSeccion>
+
+            <Contenedor>
+              {animesDB.map((serie) => (
+                <Card onClick={() => animeSeleccionado(serie)}>
                   <CardImage>
                     <img src={serie.imagen} alt={serie.nombre} />
                   </CardImage>

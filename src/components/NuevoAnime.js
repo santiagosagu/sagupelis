@@ -79,9 +79,9 @@ const BotonConfirm = styled.button`
   }
 `;
 
-const NuevaSerie = () => {
-  const [series, setSeries] = useState([]);
-  const [datosSerie, setDatosSerie] = useState({
+const NuevaAnime = () => {
+  const [anime, setAnime] = useState([]);
+  const [datosAnime, setDatosAnime] = useState({
     id: "",
     imagen: "",
     nombre: "",
@@ -100,7 +100,7 @@ const NuevaSerie = () => {
   // traer todas las series
   useEffect(() => {
     const obtenerProductos = () => {
-      db.collection("series").orderBy("id", "desc").onSnapshot(manejarSnapshot);
+      db.collection("anime").orderBy("id", "desc").onSnapshot(manejarSnapshot);
     };
 
     obtenerProductos();
@@ -112,7 +112,7 @@ const NuevaSerie = () => {
           ...doc.data(),
         };
       });
-      setSeries(resultado);
+      setAnime(resultado);
     }
   }, []);
 
@@ -141,8 +141,8 @@ const NuevaSerie = () => {
   };
 
   const confirmarTemporadas = () => {
-    setDatosSerie({
-      ...datosSerie,
+    setDatosAnime({
+      ...datosAnime,
       temporadas: temporadas,
     });
 
@@ -151,12 +151,12 @@ const NuevaSerie = () => {
 
   const guardarSerie = async (e) => {
     e.preventDefault();
-    await db.collection("series").add(datosSerie);
+    await db.collection("anime").add(datosAnime);
 
-    if (datosSerie.nombre !== "") {
+    if (datosAnime.nombre !== "") {
     }
 
-    console.log("serie guardada");
+    console.log("anime guardada");
   };
 
   return (
@@ -165,14 +165,14 @@ const NuevaSerie = () => {
         onSubmit={guardarSerie}
         style={{ display: "flex", flexDirection: "column" }}
       >
-        {series.length && <p>consecutivo: {series.length}</p>}
+        {anime.length && <p>consecutivo: {anime.length}</p>}
 
-        <h2>Datos de la Serie</h2>
+        <h2>Datos del Anime</h2>
         <label>Id</label>
         <input
           type="number"
           onChange={(e) =>
-            setDatosSerie({ ...datosSerie, id: Number(e.target.value) })
+            setDatosAnime({ ...datosAnime, id: Number(e.target.value) })
           }
         />
 
@@ -180,15 +180,15 @@ const NuevaSerie = () => {
         <input
           type="text"
           onChange={(e) =>
-            setDatosSerie({ ...datosSerie, imagen: e.target.value })
+            setDatosAnime({ ...datosAnime, imagen: e.target.value })
           }
         />
 
-        <label>Nombre Serie</label>
+        <label>Nombre Anime</label>
         <input
           type="text"
           onChange={(e) =>
-            setDatosSerie({ ...datosSerie, nombre: e.target.value })
+            setDatosAnime({ ...datosAnime, nombre: e.target.value })
           }
         />
 
@@ -196,7 +196,7 @@ const NuevaSerie = () => {
         <input
           type="text"
           onChange={(e) =>
-            setDatosSerie({ ...datosSerie, descripcion: e.target.value })
+            setDatosAnime({ ...datosAnime, descripcion: e.target.value })
           }
         />
 
@@ -204,14 +204,14 @@ const NuevaSerie = () => {
         <input
           type="text"
           onChange={(e) =>
-            setDatosSerie({ ...datosSerie, categoria: e.target.value })
+            setDatosAnime({ ...datosAnime, categoria: e.target.value })
           }
         />
-        {datosSerie.id > series.length &&
-          datosSerie.imagen.trim > "" &&
-          datosSerie.nombre.trim > "" &&
-          datosSerie.descripcion.trim > "" &&
-          datosSerie.categoria.trim > "" && (
+        {datosAnime.id > anime.length &&
+          datosAnime.imagen.trim > "" &&
+          datosAnime.nombre.trim > "" &&
+          datosAnime.descripcion.trim > "" &&
+          datosAnime.categoria.trim > "" && (
             <>
               <h2>Temporada</h2>
               <input
@@ -287,17 +287,17 @@ const NuevaSerie = () => {
           </Boton>
         )}
 
-        {datosSerie.temporadas.length > 0 && (
+        {datosAnime.temporadas.length > 0 && (
           <div className="cardEpisodio">
             <li>
-              Se han Guardado {datosSerie.temporadas.length} Temporada con
+              Se han Guardado {datosAnime.temporadas.length} Temporada con
               Exito!!!
             </li>
             <li>Ya Puedes Proceder a guardar en la base de datos</li>
           </div>
         )}
 
-        {datosSerie.temporadas.length > 0 && (
+        {datosAnime.temporadas.length > 0 && (
           <BotonConfirm type="submit">Guardar Base Datos</BotonConfirm>
         )}
       </form>
@@ -305,4 +305,4 @@ const NuevaSerie = () => {
   );
 };
 
-export default NuevaSerie;
+export default NuevaAnime;
