@@ -509,8 +509,6 @@ const VerSerie = ({ match, history }) => {
         (serie) => serie.nombre === datosSerie[0].nombre
       );
 
-      console.log(resultado[0].nombre);
-
       setComentarios({
         ...comentarios,
         nombre: resultado[0].nombre,

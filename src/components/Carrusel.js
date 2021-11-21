@@ -45,8 +45,6 @@ const Img = Styled.img`
 `;
 
 const Carrusel = ({ catalogo }) => {
-  console.log(catalogo);
-
   return (
     <>
       <Contenedor>

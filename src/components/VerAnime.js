@@ -508,8 +508,6 @@ const VerAnime = ({ match, history }) => {
         (serie) => serie.nombre === datosAnime[0].nombre
       );
 
-      console.log(resultado[0].nombre);
-
       setComentarios({
         ...comentarios,
         nombre: resultado[0].nombre,

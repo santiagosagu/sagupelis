@@ -114,8 +114,6 @@ const NuevaPelicula = () => {
         url: "",
       });
     }
-
-    console.log("pelicula guardada");
   };
 
   return (

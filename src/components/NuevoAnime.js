@@ -155,8 +155,6 @@ const NuevaAnime = () => {
 
     if (datosAnime.nombre !== "") {
     }
-
-    console.log("anime guardada");
   };
 
   return (

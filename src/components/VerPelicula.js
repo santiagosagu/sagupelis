@@ -271,7 +271,6 @@ const VerPelicula = ({ match, history }) => {
         (dato) => dato.nombre === datosPelicula[0].nombre
       );
 
-      console.log(resultado);
       setComentariosDb(resultado);
     }
   }, [datosPelicula, comentariosDbTodos]);
@@ -371,8 +370,6 @@ const VerPelicula = ({ match, history }) => {
         (pelicula) => pelicula.nombre === datosPelicula[0].nombre
       );
 
-      console.log(resultado[0].nombre);
-
       setComentarios({
         ...comentarios,
         nombre: resultado[0].nombre,
@@ -387,8 +384,6 @@ const VerPelicula = ({ match, history }) => {
       );
 
       guardarDatosPelicula(prueba);
-
-      console.log(prueba);
     };
 
     revisarPelicula();
@@ -418,7 +413,6 @@ const VerPelicula = ({ match, history }) => {
       }, 3000);
     }
   };
-  console.log(votosGusta);
 
   const gusta = async (nombre) => {
     if (votosGustaActual.length > 0 && !yaVotaste) {

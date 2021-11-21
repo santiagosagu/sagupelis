@@ -155,8 +155,6 @@ const NuevaSerie = () => {
 
     if (datosSerie.nombre !== "") {
     }
-
-    console.log("serie guardada");
   };
 
   return (

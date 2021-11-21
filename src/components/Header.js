@@ -94,7 +94,7 @@ const Header = () => {
     <>
       <Contenedor>
         <Movil>
-          <Link to="/">
+          <Link to="/" id="link-escritorio-inicio">
             <Imagen src={Logo} alt="logo" />
           </Link>
 
@@ -111,16 +111,24 @@ const Header = () => {
         <ContenedorEnlaces>
           <Enlaces>
             <li>
-              <Link to="/peliculas">Peliculas</Link>
+              <Link to="/peliculas" id="link-escritorio-peliculas">
+                Peliculas
+              </Link>
             </li>
             <li>
-              <Link to="/series">Series</Link>
+              <Link to="/series" id="link-escritorio-series">
+                Series
+              </Link>
             </li>
             <li>
-              <Link to="/animes">Animes</Link>
+              <Link to="/animes" id="link-escritorio-animes">
+                Animes
+              </Link>
             </li>
             <li>
-              <Link to="/buscar">Buscar</Link>
+              <Link to="/buscar" id="link-escritorio-buscar">
+                Buscar
+              </Link>
             </li>
             <li>
               <a
@@ -128,6 +136,7 @@ const Header = () => {
                 href="https://www.facebook.com/sagupelis.xyz"
                 target="_blank"
                 rel="noopener noreferrer"
+                id="link-escritorio-facebook"
               >
                 Pagina de Facebook
               </a>

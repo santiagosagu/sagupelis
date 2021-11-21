@@ -18,6 +18,7 @@ import NuevaPelicula from "./components/NuevaPelicula";
 import NuevaAnime from "./components/NuevoAnime";
 import VerAnime from "./components/VerAnime";
 import Animes from "./components/Animes";
+import AsistenteVirtual from "./asistenteVirtual";
 
 const Derechos = Styled.h3`
   text-align: center;
@@ -61,35 +62,35 @@ const App = () => {
     }
   }, [notificacion]);
 
-  console.log(notificacion);
-
   return (
     <>
-      <Router>
-        <Header />
+      <AsistenteVirtual>
+        <Router>
+          <Header />
 
-        <Switch>
-          <Route exact path="/" component={Inicio} />
-          <Route exact path="/peliculas" component={Peliculas} />
-          <Route exact path="/series" component={Series} />
-          <Route exact path="/animes" component={Animes} />
-          <Route exact path="/buscar" component={Buscar} />
-          <Route
-            exact
-            path="/ver-pelicula/:nombre/:id"
-            component={VerPelicula}
-          />
-          <Route exact path="/ver-serie/:nombre/:id" component={VerSerie} />
-          <Route exact path="/ver-anime/:nombre/:id" component={VerAnime} />
-          <Route exact path="/nueva-pelicula" component={NuevaPelicula} />
-          <Route exact path="/nueva-serie" component={NuevaSerie} />
-          <Route exact path="/nuevo-anime" component={NuevaAnime} />
-        </Switch>
+          <Switch>
+            <Route exact path="/" component={Inicio} />
+            <Route exact path="/peliculas" component={Peliculas} />
+            <Route exact path="/series" component={Series} />
+            <Route exact path="/animes" component={Animes} />
+            <Route exact path="/buscar" component={Buscar} />
+            <Route
+              exact
+              path="/ver-pelicula/:nombre/:id"
+              component={VerPelicula}
+            />
+            <Route exact path="/ver-serie/:nombre/:id" component={VerSerie} />
+            <Route exact path="/ver-anime/:nombre/:id" component={VerAnime} />
+            <Route exact path="/nueva-pelicula" component={NuevaPelicula} />
+            <Route exact path="/nueva-serie" component={NuevaSerie} />
+            <Route exact path="/nuevo-anime" component={NuevaAnime} />
+          </Switch>
 
-        <Derechos>
-          Todos los Derechos Reservados {new Date().getFullYear()}
-        </Derechos>
-      </Router>
+          <Derechos>
+            Todos los Derechos Reservados {new Date().getFullYear()}
+          </Derechos>
+        </Router>
+      </AsistenteVirtual>
     </>
   );
 };
