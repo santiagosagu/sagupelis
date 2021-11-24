@@ -135,12 +135,16 @@ const Series = ({ history }) => {
           <Titulo>Todas las Series</Titulo>
 
           <Contenedor>
-            {series.map((serie) => (
-              <Card onClick={() => serieSeleccionada(serie)}>
+            {series.map((serie, index) => (
+              <Card
+                onClick={() => serieSeleccionada(serie)}
+                className="ver-serie"
+              >
                 <CardImage>
                   <img src={serie.imagen} alt={serie.nombre} />
                 </CardImage>
                 <h3>{serie.nombre}</h3>
+                <h3>identificador: {index}</h3>
               </Card>
             ))}
           </Contenedor>

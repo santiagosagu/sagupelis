@@ -498,7 +498,7 @@ const VerPelicula = ({ match, history }) => {
                 {" "}
                 <span>Categoria:</span> {datosPelicula[0].categoria}
               </h4>
-              <p>{datosPelicula[0].descripcion}</p>
+              <p id="descripcion-pelicula">{datosPelicula[0].descripcion}</p>
               <ContenidoVotos>
                 <div>
                   <i

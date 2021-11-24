@@ -665,7 +665,7 @@ const VerAnime = ({ match, history }) => {
                 {" "}
                 <span>Categoria:</span> {datosAnime[0].categoria}
               </h4>
-              <p>{datosAnime[0].descripcion}</p>
+              <p id="descripcion-anime">{datosAnime[0].descripcion}</p>
               <ContenidoVotos>
                 <div>
                   <i

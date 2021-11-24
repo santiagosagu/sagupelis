@@ -666,7 +666,7 @@ const VerSerie = ({ match, history }) => {
                 {" "}
                 <span>Categoria:</span> {datosSerie[0].categoria}
               </h4>
-              <p>{datosSerie[0].descripcion}</p>
+              <p id="descripcion-serie">{datosSerie[0].descripcion}</p>
               <ContenidoVotos>
                 <div>
                   <i

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Styled from "@emotion/styled";
 import useInformacionPeliculas from "../hooks/useInformacionPeliculas";
 import { db } from "../firebaseConfig";
@@ -156,12 +156,16 @@ const Peliculas = ({ history }) => {
           <Titulo>Todas las Peliculas</Titulo>
 
           <Contenedor>
-            {peliculas.map((pelicula) => (
-              <Card onClick={() => peliculaSeleccionada(pelicula)}>
+            {peliculas.map((pelicula, index) => (
+              <Card
+                onClick={() => peliculaSeleccionada(pelicula)}
+                className="ver-pelicula"
+              >
                 <CardImage>
                   <img src={pelicula.imagen} alt={pelicula.nombre} />
                 </CardImage>
                 <h3>{pelicula.nombre}</h3>
+                <h3>Identificador: {index}</h3>
               </Card>
             ))}
           </Contenedor>

@@ -1,6 +1,4 @@
 import React, { createContext } from "react";
-import annyang from "annyang";
-import { comands } from "./useComands";
 import { animateScroll as scroll } from "react-scroll";
 
 import Artyom from "artyom.js";
@@ -8,41 +6,6 @@ import Artyom from "artyom.js";
 export const AsistenteVirtualContext = createContext();
 
 const AsistenteVirtual = (props) => {
-  // if (annyang) {
-  //   annyang.addCallback(
-  //     "resultMatch",
-  //     function (userSaid, commandText, phrases) {
-  //       console.log(userSaid); // sample output: 'hello'
-  //       console.log(commandText); // sample output: 'hello (there)'
-  //       console.log(phrases); // sample output: ['hello', 'halo', 'yellow', 'polo', 'hello kitty']
-  //     }
-  //   );
-
-  //   const comands = {
-  //     hola: () => {
-  //       console.log("hola como te llamas");
-
-  //       annyang.addCallback("resultMatch", function (userSaid) {
-  //         if (userSaid === "santi") {
-  //           alert("hola santi");
-  //           console.log("entre");
-  //         }
-  //       });
-  //     },
-  //     "llevame a todas las peliculas": () => {
-  //       console.log("llendo a peliculas");
-  //     },
-  //   };
-
-  //   annyang.addCommands(comands);
-
-  //   annyang.setLanguage("es-CO");
-
-  //   annyang.start({ autoRestart: true, continuous: false });
-  // }
-
-  // Jarvis.say("Hola Santi");
-
   let Jarvis = "";
 
   window.onload = function () {
@@ -53,6 +16,7 @@ const AsistenteVirtual = (props) => {
       console.log("soy soportado");
 
       Jarvis.addCommands([
+        //* interaccion
         {
           indexes: ["Hola"],
           action: function (i) {
@@ -71,6 +35,31 @@ const AsistenteVirtual = (props) => {
             );
           },
         },
+        {
+          indexes: ["Léeme la descripción de la película"],
+          action: function (i) {
+            Jarvis.say(
+              document.getElementById("descripcion-pelicula").textContent
+            );
+          },
+        },
+        {
+          indexes: ["Léeme la descripción de la serie"],
+          action: function (i) {
+            Jarvis.say(
+              document.getElementById("descripcion-serie").textContent
+            );
+          },
+        },
+        {
+          indexes: ["Léeme la descripción del anime"],
+          action: function (i) {
+            Jarvis.say(
+              document.getElementById("descripcion-anime").textContent
+            );
+          },
+        },
+        //* Rutas
         {
           indexes: ["Llévame al inicio"],
           action: function (i) {
@@ -116,6 +105,7 @@ const AsistenteVirtual = (props) => {
             document.getElementById("link-escritorio-facebook").click();
           },
         },
+        //* desplazamiento
         {
           indexes: ["abajo"],
           action: function (i) {
@@ -130,28 +120,61 @@ const AsistenteVirtual = (props) => {
             scroll.scrollMore(-500);
           },
         },
+        //* comandos inteligentes
+        {
+          smart: true,
+          indexes: ["Ver película *"],
+          action: function (i, wildcard) {
+            document
+              .getElementsByClassName("ver-pelicula")
+              [Number(wildcard)].click();
+            Jarvis.say(`llendo a pelicula ${wildcard}`);
+          },
+        },
+        {
+          smart: true,
+          indexes: ["Ver serie *"],
+          action: function (i, wildcard) {
+            document
+              .getElementsByClassName("ver-serie")
+              [Number(wildcard)].click();
+
+            Jarvis.say(`llendo a serie ${wildcard}`);
+          },
+        },
+        {
+          smart: true,
+          indexes: ["Ver anime *"],
+          action: function (i, wildcard) {
+            document
+              .getElementsByClassName("ver-anime")
+              [Number(wildcard)].click();
+            Jarvis.say(`llendo a anime ${wildcard}`);
+          },
+        },
         {
           indexes: ["espera"],
-          action: function (i, wildcard) {
+          action: function (i) {
             Jarvis.dontObey();
             Jarvis.say(
               "De acuerdo estare esperando, para llamarme solo di mi nombre y la palabra escucha"
             );
-
-            console.log(wildcard);
+          },
+        },
+        {
+          indexes: ["para"],
+          action: function (i) {
+            Jarvis.dontObey();
+            Jarvis.say("Esta bien señor");
           },
         },
       ]);
 
-      // Jarvis.initialize({
-      //   lang: "es-ES",
-      //   debug: true, // Show what recognizes in the Console
-      //   listen: true, // Start listening after this
-      //   speed: 0.9, // Talk a little bit slow
-      //   mode: "normal", // This parameter is not required as it will be normal by default
-      //   autoRestart: true,
-      //   // continuous: true,
-      // });
+      // if (Jarvis.isSpeaking()) {
+      //   console.log("Artyom is speaking something");
+      // } else {
+      //   console.log("Artyom is not speaking anything");
+      // }
 
       Jarvis.initialize({
         lang: "es-ES",
